@@ -1,6 +1,6 @@
 package ar.edu.unq.solotravel.backend.api.models;
 
-import lombok.Getter;
+import lombok.*;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
@@ -24,8 +24,4 @@ public class Trip {
     private LocalDate endDate;
     @Enumerated(EnumType.STRING)
     private TripCategory category;
-
-    public Integer getDurationInDays(){
-        return Period.between(startDate,endDate).getDays();
-    }
 }
