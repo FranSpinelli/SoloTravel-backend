@@ -14,5 +14,15 @@ public class User {
     private Integer id;
     private String name;
     @OneToMany(fetch = FetchType.LAZY)
-    private List<Trip> favourites;
+    private List<Trip> favorites;
+
+    public void addFavorite(Trip trip){
+        if(!favorites.contains(trip)){
+            favorites.add(trip);
+        }
+    }
+
+    public void removeFavorite(Trip trip){
+        favorites.remove(trip);
+    }
 }

@@ -10,3 +10,6 @@ INSERT INTO trips (id, name, destination, description, price, start_date, end_da
     (9, 'Escapada a Mar del Plata', 'Mar del Plata', 'Una descripcion que hay que pensar mejor', 15000.0, '2022-01-06', '2022-01-09', 'CATEGORY1'),
     (10, 'Escapada a Pinamar', 'Pinamar', 'Una descripcion que hay que pensar mejor', 15000.0, '2022-01-06', '2022-01-09', 'CATEGORY1'),
     (11, 'Mendoza: montañas, historia, cultura y mucho vino!', 'Mendoza', 'Una descripcion que hay que pensar mejor', 25000.0, '2022-02-03', '2022-02-015', 'CATEGORY2');
+
+INSERT INTO users (id, name) VALUES
+    (1, 'guest');
