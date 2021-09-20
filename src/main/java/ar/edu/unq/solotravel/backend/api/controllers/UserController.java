@@ -15,16 +15,18 @@ public class UserController {
 
     @GetMapping("/{userId}/favorites")
     public ResponseEntity getUserFavorites(@PathVariable Integer userId) throws NoSuchElementException {
-        return userService.getUserFavorites(userId);
+        return ResponseEntity.ok().body(userService.getUserFavorites(userId));
     }
 
     @PutMapping("/{userId}/favorites/{tripId}")
     public ResponseEntity addTripToUserFavorites(@PathVariable Integer userId, @PathVariable Integer tripId) throws NoSuchElementException {
-        return userService.addTripToUserFavorites(userId, tripId);
+        userService.addTripToUserFavorites(userId, tripId);
+        return ResponseEntity.ok().build();
     }
 
     @DeleteMapping("/{userId}/favorites/{tripId}")
     public ResponseEntity removeTripFromUserFavorites(@PathVariable Integer userId, @PathVariable Integer tripId) throws NoSuchElementException{
-        return userService.removeTripFromUserFavorites(userId, tripId);
+        userService.removeTripFromUserFavorites(userId, tripId);
+        return ResponseEntity.ok().build();
     }
 }

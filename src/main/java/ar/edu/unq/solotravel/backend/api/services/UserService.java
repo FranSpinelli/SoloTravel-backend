@@ -6,8 +6,9 @@ import ar.edu.unq.solotravel.backend.api.models.User;
 import ar.edu.unq.solotravel.backend.api.repositories.TripRepository;
 import ar.edu.unq.solotravel.backend.api.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 public class UserService {
@@ -17,29 +18,25 @@ public class UserService {
     @Autowired
     private TripRepository tripRepository;
 
-    public ResponseEntity getUserFavorites(Integer userId) throws NoSuchElementException {
+    public List<Trip> getUserFavorites(Integer userId) throws NoSuchElementException {
 
         User userWithId = userRepository.findById(userId).orElseThrow(() -> new NoSuchElementException("No User with Id: " + userId));
-        return ResponseEntity.ok().body(userWithId.getFavorites());
+        return userWithId.getFavorites();
     }
 
-    public ResponseEntity addTripToUserFavorites(Integer userId, Integer tripId) throws NoSuchElementException {
+    public void addTripToUserFavorites(Integer userId, Integer tripId) throws NoSuchElementException {
 
         User userWithId = userRepository.findById(userId).orElseThrow(() -> new NoSuchElementException("No User with Id: " + userId));
         Trip tripWithId = tripRepository.findById(tripId).orElseThrow(() -> new NoSuchElementException("No Trip with Id: " + tripId));
         userWithId.addFavorite(tripWithId);
         userRepository.save(userWithId);
-
-        return ResponseEntity.ok().build();
     }
 
-    public ResponseEntity removeTripFromUserFavorites(Integer userId, Integer tripId) throws NoSuchElementException {
+    public void removeTripFromUserFavorites(Integer userId, Integer tripId) throws NoSuchElementException {
 
         User userWithId = userRepository.findById(userId).orElseThrow(() -> new NoSuchElementException("No User with Id: " + userId));
         Trip tripWithId = tripRepository.findById(tripId).orElseThrow(() -> new NoSuchElementException("No Trip with Id: " + tripId));
         userWithId.removeFavorite(tripWithId);
         userRepository.save(userWithId);
-
-        return ResponseEntity.ok().build();
     }
 }

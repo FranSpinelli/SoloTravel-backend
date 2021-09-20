@@ -14,6 +14,6 @@ public class TripController {
 
     @GetMapping("/trips")
     public ResponseEntity getAllTrips(){
-        return tripService.getAllTrips();
+        return ResponseEntity.ok().body(tripService.getAllTrips());
     }
 }

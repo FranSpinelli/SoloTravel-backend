@@ -25,6 +25,8 @@ dependencies {
 	//LOMBOK
 	compileOnly group: 'org.projectlombok', name: 'lombok', version: '1.18.20'
 	annotationProcessor 'org.projectlombok:lombok:1.18.20'
+	//MODEL MAPPER
+	implementation group: 'org.modelmapper', name: 'modelmapper', version: '2.4.4'
 }
 
 test {
