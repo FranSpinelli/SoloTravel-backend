@@ -13,5 +13,8 @@ public class TripDto {
 
     private Integer id;
     private String name;
+    private String destination;
+    private String image;
     private String description;
+    private double price;
 }

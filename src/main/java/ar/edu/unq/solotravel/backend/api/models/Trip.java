@@ -16,6 +16,7 @@ public class Trip {
     private Integer id;
     private String name;
     private String destination;
+    private String image;
     @Column(length = 100000)
     private String description;
     private Double price;
