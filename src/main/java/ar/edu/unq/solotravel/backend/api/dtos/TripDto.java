@@ -18,4 +18,5 @@ public class TripDto {
     private String description;
     private double price;
     private Integer duration;
+    private Boolean isFavorite;
 }

@@ -29,6 +29,8 @@ public class UserService {
         User userWithId = userRepository.findById(userId).orElseThrow(() -> new NoSuchElementException("No User with Id: " + userId));
 
         List<TripDto> tripsDtoList = userWithId.getFavorites().stream().map(trip -> modelMapper.map(trip, TripDto.class)).collect(Collectors.toList());
+        // TODO: Enhance the way of setting a trip as favorite (ideally using model mapper)
+        tripsDtoList.forEach(tripDto -> tripDto.setIsFavorite(true));
 
         return new TripListResponseDto(tripsDtoList);
     }
