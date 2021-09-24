@@ -20,12 +20,13 @@ public class TripService {
     private TripRepository tripRepository;
     @Autowired
     private TripSpecsBuilder tripSpecsBuilder;
+    @Autowired
+    private ModelMapper modelMapper;
 
     public TripListResponseDto getAllTrips(String name) {
 
         Specification<Trip> specs = tripSpecsBuilder.buildCriteriaSpecs(name);
 
-        ModelMapper modelMapper = new ModelMapper();
         List<TripDto> tripsDtoList = tripRepository.findAll(specs).stream().map( trip -> modelMapper.map(trip, TripDto.class)).collect(Collectors.toList());
 
         return new TripListResponseDto(tripsDtoList);

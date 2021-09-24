@@ -1,11 +1,11 @@
 package ar.edu.unq.solotravel.backend.api.models;
 
-import lombok.*;
+import lombok.Getter;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import java.time.LocalDate;
-import java.time.Period;
+import java.time.temporal.ChronoUnit;
 
 @Entity
 @Table(name = "trips")
@@ -26,4 +26,8 @@ public class Trip {
     private LocalDate endDate;
     @Enumerated(EnumType.STRING)
     private TripCategory category;
+
+    public Integer getDuration(){
+        return Math.toIntExact(ChronoUnit.DAYS.between(startDate, endDate));
+    }
 }

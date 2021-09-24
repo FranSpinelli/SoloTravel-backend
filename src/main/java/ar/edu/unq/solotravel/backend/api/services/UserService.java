@@ -21,12 +21,13 @@ public class UserService {
     private UserRepository userRepository;
     @Autowired
     private TripRepository tripRepository;
+    @Autowired
+    private ModelMapper modelMapper;
 
     public TripListResponseDto getUserFavorites(Integer userId) throws NoSuchElementException {
 
         User userWithId = userRepository.findById(userId).orElseThrow(() -> new NoSuchElementException("No User with Id: " + userId));
 
-        ModelMapper modelMapper = new ModelMapper();
         List<TripDto> tripsDtoList = userWithId.getFavorites().stream().map(trip -> modelMapper.map(trip, TripDto.class)).collect(Collectors.toList());
 
         return new TripListResponseDto(tripsDtoList);

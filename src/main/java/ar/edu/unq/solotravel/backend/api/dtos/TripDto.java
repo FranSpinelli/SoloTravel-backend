@@ -17,4 +17,5 @@ public class TripDto {
     private String image;
     private String description;
     private double price;
+    private Integer duration;
 }
