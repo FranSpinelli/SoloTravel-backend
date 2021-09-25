@@ -1,1 +1,1 @@
-# SoloTravel-beckend
+# SoloTravel-backend
