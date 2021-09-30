@@ -29,6 +29,8 @@ dependencies {
 	annotationProcessor 'org.projectlombok:lombok:1.18.20'
 	//MODEL MAPPER
 	implementation group: 'org.modelmapper', name: 'modelmapper', version: '2.4.4'
+	//JWT
+	implementation 'com.auth0:java-jwt:3.18.2'
 }
 
 test {

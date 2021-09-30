@@ -66,5 +66,5 @@ INSERT INTO trips (id, name, destination, image, description, price, start_date,
         8503, '2022-02-03', '2022-02-015', 'CATEGORY2'
     );
 
-INSERT INTO users (id, name) VALUES
-    (1, 'guest');
+--INSERT INTO users (id, name) VALUES
+    --(1, 'guest');
