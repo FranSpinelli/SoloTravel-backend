@@ -28,20 +28,30 @@ public class TripService {
     @Autowired
     private ModelMapper modelMapper;
 
-    public TripListResponseDto getAllTrips(Integer userId, String name) throws NoSuchElementException {
+    public TripListResponseDto getAllTrips(String name) {
 
         Specification<Trip> specs = tripSpecsBuilder.buildCriteriaSpecs(name);
+        List<TripDto> tripsDtoList = tripRepository.findAll(specs).stream().map( trip -> modelMapper.map(trip, TripDto.class)).collect(Collectors.toList());
+
+        return new TripListResponseDto(tripsDtoList);
+    }
+
+    public TripListResponseDto getAllTripsByUser(Integer userId, String name) throws NoSuchElementException {
+
         User userWithId = userRepository.findById(userId).orElseThrow(() -> new NoSuchElementException("No User with Id: " + userId));
 
-        List<TripDto> tripsDtoList = tripRepository.findAll(specs).stream().map( trip -> modelMapper.map(trip, TripDto.class)).collect(Collectors.toList());
-        // TODO: Enhance the way of checking if it is a favorite trip
-        tripsDtoList.forEach(tripDto -> {
-            if (userWithId.getFavorites().stream()
-                    .anyMatch(trip -> tripDto.getId().equals(trip.getId()))) {
+        TripListResponseDto tripsDtoList = this.getAllTrips(name);
+        tripsDtoList = setFavoritesTripsFromUser(tripsDtoList.getTrips(), userWithId.getFavorites());
+
+        return tripsDtoList;
+    }
+
+    private TripListResponseDto setFavoritesTripsFromUser(List<TripDto> trips, List<Trip> userFavorites) {
+        trips.forEach(tripDto -> {
+            if (userFavorites.stream().anyMatch(trip -> tripDto.getId().equals(trip.getId()))) {
                 tripDto.setIsFavorite(true);
             }
         });
-
-        return new TripListResponseDto(tripsDtoList);
+        return new TripListResponseDto(trips);
     }
 }
