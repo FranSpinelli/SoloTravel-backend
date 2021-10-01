@@ -4,31 +4,18 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
-import java.util.List;
 
 @Entity
+@Inheritance(strategy = InheritanceType.JOINED)
 @Table(name = "users")
 @Getter
 @Setter
 public class User {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
-    private String googleId;
     private String name;
     private String email;
     private String picture;
-    @OneToMany(fetch = FetchType.LAZY)
-    private List<Trip> favorites;
-
-    public void addFavorite(Trip trip){
-        if(!favorites.contains(trip)){
-            favorites.add(trip);
-        }
-    }
-
-    public void removeFavorite(Trip trip){
-        favorites.remove(trip);
-    }
 }

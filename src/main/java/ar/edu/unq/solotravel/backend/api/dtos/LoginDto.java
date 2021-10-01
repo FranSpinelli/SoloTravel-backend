@@ -3,11 +3,11 @@ package ar.edu.unq.solotravel.backend.api.dtos;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 
-@AllArgsConstructor
 @NoArgsConstructor
+@AllArgsConstructor
 @Getter
-public class GoogleAuthResponseDto {
-    private Integer id;
+public class LoginDto {
+    private String travelAgentEmail;
+    private String travelAgentPassword;
 }

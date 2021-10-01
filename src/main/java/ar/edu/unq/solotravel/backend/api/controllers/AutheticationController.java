@@ -3,8 +3,9 @@ package ar.edu.unq.solotravel.backend.api.controllers;
 import ar.edu.unq.solotravel.backend.api.dtos.ErrorResponseDto;
 import ar.edu.unq.solotravel.backend.api.dtos.GoogleAuthResponseDto;
 import ar.edu.unq.solotravel.backend.api.dtos.GoogleProfileDto;
+import ar.edu.unq.solotravel.backend.api.dtos.LoginDto;
 import ar.edu.unq.solotravel.backend.api.helpers.JwtHelper;
-import ar.edu.unq.solotravel.backend.api.services.UserService;
+import ar.edu.unq.solotravel.backend.api.services.AuthenticationService;
 import com.auth0.jwt.interfaces.DecodedJWT;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -16,11 +17,11 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/authentication")
 public class AutheticationController {
     @Autowired
-    private UserService userService;
+    private AuthenticationService authenticationService;
     @Autowired
     private JwtHelper jwtHelper;
 
-    @PostMapping(value = "/login/google")
+    @PostMapping("/login/google")
     public ResponseEntity authenticateByGoogle(
             @RequestHeader("Authorization") String googleToken,
             @RequestBody GoogleProfileDto googleProfileDto
@@ -29,8 +30,13 @@ public class AutheticationController {
         if (jwt == null)
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(new ErrorResponseDto("Invalid authentication token"));
 
-        GoogleAuthResponseDto res = userService.authenticateByGoogle(googleProfileDto);
+        GoogleAuthResponseDto res = authenticationService.authenticateByGoogle(googleProfileDto);
 
         return ResponseEntity.ok().body(res);
+    }
+
+    @PostMapping("/login/internal")
+    public ResponseEntity authenticatieTravelAgent(@RequestBody LoginDto loginDto){
+        return authenticationService.authenticateTravelAgent(loginDto);
     }
 }
