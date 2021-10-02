@@ -16,6 +16,7 @@ public class User {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
     private String name;
+    @Column(unique = true, length = 100)
     private String email;
     private String picture;
 }

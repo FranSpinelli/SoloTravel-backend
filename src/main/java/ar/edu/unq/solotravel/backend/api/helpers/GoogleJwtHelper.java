@@ -4,14 +4,13 @@ import com.auth0.jwt.JWT;
 import com.auth0.jwt.exceptions.JWTDecodeException;
 import com.auth0.jwt.exceptions.JWTVerificationException;
 import com.auth0.jwt.interfaces.DecodedJWT;
-import com.auth0.jwt.interfaces.Payload;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import java.util.Date;
 
 @Component
-public class JwtHelper {
+public class GoogleJwtHelper {
     @Value("${oauth.google.issuer}")
     private String G_ISSUER;
     @Value("${oauth.google.client_id}")
