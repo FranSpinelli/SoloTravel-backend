@@ -14,10 +14,15 @@ public class TripController {
     @Autowired
     private TripService tripService;
 
+    @GetMapping()
+    public ResponseEntity getAllTrips(@RequestParam(required = false) String name) {
+        return ResponseEntity.ok().body(tripService.getAllTrips(name));
+    }
+
     @GetMapping("/{userId}")
-    public ResponseEntity getAllTrips(
+    public ResponseEntity getAllTripsByUser(
             @PathVariable Integer userId,
             @RequestParam(required = false) String name) throws NoSuchElementException {
-        return ResponseEntity.ok().body(tripService.getAllTrips(userId, name));
+        return ResponseEntity.ok().body(tripService.getAllTripsByUser(userId, name));
     }
 }

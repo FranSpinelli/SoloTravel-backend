@@ -1,28 +1,22 @@
 package ar.edu.unq.solotravel.backend.api.models;
 
 import lombok.Getter;
+import lombok.Setter;
 
 import javax.persistence.*;
-import java.util.List;
 
 @Entity
+@Inheritance(strategy = InheritanceType.JOINED)
 @Table(name = "users")
 @Getter
+@Setter
 public class User {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
     private String name;
-    @OneToMany(fetch = FetchType.LAZY)
-    private List<Trip> favorites;
-
-    public void addFavorite(Trip trip){
-        if(!favorites.contains(trip)){
-            favorites.add(trip);
-        }
-    }
-
-    public void removeFavorite(Trip trip){
-        favorites.remove(trip);
-    }
+    @Column(unique = true, length = 100)
+    private String email;
+    private String picture;
 }

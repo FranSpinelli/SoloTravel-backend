@@ -3,10 +3,11 @@ package ar.edu.unq.solotravel.backend.api.services;
 import ar.edu.unq.solotravel.backend.api.dtos.TripDto;
 import ar.edu.unq.solotravel.backend.api.dtos.TripListResponseDto;
 import ar.edu.unq.solotravel.backend.api.exceptions.NoSuchElementException;
+import ar.edu.unq.solotravel.backend.api.models.Traveler;
 import ar.edu.unq.solotravel.backend.api.models.Trip;
 import ar.edu.unq.solotravel.backend.api.models.User;
 import ar.edu.unq.solotravel.backend.api.repositories.TripRepository;
-import ar.edu.unq.solotravel.backend.api.repositories.UserRepository;
+import ar.edu.unq.solotravel.backend.api.repositories.TravelerRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -18,7 +19,7 @@ import java.util.stream.Collectors;
 public class UserService {
 
     @Autowired
-    private UserRepository userRepository;
+    private TravelerRepository travelerRepository;
     @Autowired
     private TripRepository tripRepository;
     @Autowired
@@ -26,7 +27,7 @@ public class UserService {
 
     public TripListResponseDto getUserFavorites(Integer userId) throws NoSuchElementException {
 
-        User userWithId = userRepository.findById(userId).orElseThrow(() -> new NoSuchElementException("No User with Id: " + userId));
+        Traveler userWithId = travelerRepository.findById(userId).orElseThrow(() -> new NoSuchElementException("No User with Id: " + userId));
 
         List<TripDto> tripsDtoList = userWithId.getFavorites().stream().map(trip -> modelMapper.map(trip, TripDto.class)).collect(Collectors.toList());
         // TODO: Enhance the way of setting a trip as favorite (ideally using model mapper)
@@ -37,17 +38,17 @@ public class UserService {
 
     public void addTripToUserFavorites(Integer userId, Integer tripId) throws NoSuchElementException {
 
-        User userWithId = userRepository.findById(userId).orElseThrow(() -> new NoSuchElementException("No User with Id: " + userId));
+        Traveler userWithId = travelerRepository.findById(userId).orElseThrow(() -> new NoSuchElementException("No User with Id: " + userId));
         Trip tripWithId = tripRepository.findById(tripId).orElseThrow(() -> new NoSuchElementException("No Trip with Id: " + tripId));
         userWithId.addFavorite(tripWithId);
-        userRepository.save(userWithId);
+        travelerRepository.save(userWithId);
     }
 
     public void removeTripFromUserFavorites(Integer userId, Integer tripId) throws NoSuchElementException {
 
-        User userWithId = userRepository.findById(userId).orElseThrow(() -> new NoSuchElementException("No User with Id: " + userId));
+        Traveler userWithId = travelerRepository.findById(userId).orElseThrow(() -> new NoSuchElementException("No User with Id: " + userId));
         Trip tripWithId = tripRepository.findById(tripId).orElseThrow(() -> new NoSuchElementException("No Trip with Id: " + tripId));
         userWithId.removeFavorite(tripWithId);
-        userRepository.save(userWithId);
+        travelerRepository.save(userWithId);
     }
 }
