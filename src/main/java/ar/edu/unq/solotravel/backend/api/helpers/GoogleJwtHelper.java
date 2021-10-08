@@ -17,45 +17,35 @@ public class GoogleJwtHelper {
     private String G_CLIENT_ID;
 
     public DecodedJWT verifyGoogleToken(String token) {
-        try {
-            token = token.substring(7);
-            DecodedJWT jwt = decodeToken(token);
+        token = token.substring(7);
+        DecodedJWT jwt = decodeToken(token);
 
-            // Verify aud
-            boolean isValidAud = verifyAudience(jwt);
-            // Verify issuer
-            boolean isValidIssuer = verifyIssuer(jwt);
-            // Verify expiration
-            boolean isNotExpired = verifyExpiration(jwt);
+        verifyAudience(jwt);
+        verifyIssuer(jwt);
+        verifyExpiration(jwt);
 
-            if (isValidAud && isValidIssuer && isNotExpired)
-                return jwt;
-
-        } catch (JWTVerificationException exception){
-            //Invalid signature/claims
-        }
-        return null;
+        return jwt;
     }
 
     public DecodedJWT decodeToken(String token) {
-        try {
-            DecodedJWT jwt = JWT.decode(token);
-            return jwt;
-        } catch (JWTDecodeException exception){
-            //Invalid token
-            return null;
-        }
+        return JWT.decode(token);
     }
 
-    private boolean verifyAudience(DecodedJWT jwt) {
-        return jwt.getClaim("aud").asString().equals(G_CLIENT_ID);
+    private void verifyAudience(DecodedJWT jwt) {
+        String aud = jwt.getClaim("aud").asString();
+        if (!aud.equals(G_CLIENT_ID))
+            throw new JWTVerificationException("You don't have permission to make this request");
     }
 
-    private boolean verifyIssuer(DecodedJWT jwt) {
-        return jwt.getClaim("iss").asString().equals(G_ISSUER);
+    private void verifyIssuer(DecodedJWT jwt) {
+        String issuer = jwt.getClaim("iss").asString();
+        if (!issuer.equals(G_ISSUER))
+            throw new JWTVerificationException("You don't have permission to make this request");
     }
 
-    private boolean verifyExpiration(DecodedJWT jwt) {
-        return jwt.getClaim("exp").asDate().after(new Date());
+    private void verifyExpiration(DecodedJWT jwt) {
+        Date expiration = jwt.getClaim("exp").asDate();
+        if (expiration.after(new Date()))
+            throw new JWTVerificationException("Session expired");
     }
 }

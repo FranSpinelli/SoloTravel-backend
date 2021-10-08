@@ -29,9 +29,6 @@ public class AutheticationController {
             @RequestBody GoogleProfileDto googleProfileDto
     ) {
         DecodedJWT jwt = googleJwtHelper.verifyGoogleToken(googleToken);
-        if (jwt == null)
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(new ErrorResponseDto("Invalid authentication token"));
-
         GoogleAuthResponseDto res = authenticationService.authenticateByGoogle(googleProfileDto);
 
         return ResponseEntity.ok().body(res);
