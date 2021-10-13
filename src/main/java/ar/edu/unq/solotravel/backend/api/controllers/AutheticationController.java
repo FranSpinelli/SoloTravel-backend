@@ -7,10 +7,10 @@ import ar.edu.unq.solotravel.backend.api.dtos.TravelAgencyLoginDto;
 import ar.edu.unq.solotravel.backend.api.exceptions.LogInException;
 import ar.edu.unq.solotravel.backend.api.exceptions.NoSuchElementException;
 import ar.edu.unq.solotravel.backend.api.helpers.GoogleJwtHelper;
+import ar.edu.unq.solotravel.backend.api.security.ValidateGoogleJwt;
 import ar.edu.unq.solotravel.backend.api.services.AuthenticationService;
 import com.auth0.jwt.interfaces.DecodedJWT;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -23,13 +23,11 @@ public class AutheticationController {
     @Autowired
     private GoogleJwtHelper googleJwtHelper;
 
+    @ValidateGoogleJwt
     @PostMapping("/login/google")
-    public ResponseEntity authenticateByGoogle(
-            @RequestHeader("Authorization") String googleToken,
-            @RequestBody GoogleProfileDto googleProfileDto
-    ) {
-        DecodedJWT jwt = googleJwtHelper.verifyGoogleToken(googleToken);
-        GoogleAuthResponseDto res = authenticationService.authenticateByGoogle(googleProfileDto);
+    public ResponseEntity authenticateByGoogle(@RequestHeader("Authorization") String googleToken) {
+        GoogleProfileDto profileDto = googleJwtHelper.getProfileInfo(googleToken);
+        GoogleAuthResponseDto res = authenticationService.authenticateByGoogle(profileDto);
 
         return ResponseEntity.ok().body(res);
     }

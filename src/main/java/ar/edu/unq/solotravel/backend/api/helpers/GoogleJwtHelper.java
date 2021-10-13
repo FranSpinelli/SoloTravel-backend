@@ -1,7 +1,7 @@
 package ar.edu.unq.solotravel.backend.api.helpers;
 
+import ar.edu.unq.solotravel.backend.api.dtos.GoogleProfileDto;
 import com.auth0.jwt.JWT;
-import com.auth0.jwt.exceptions.JWTDecodeException;
 import com.auth0.jwt.exceptions.JWTVerificationException;
 import com.auth0.jwt.interfaces.DecodedJWT;
 import org.springframework.beans.factory.annotation.Value;
@@ -16,19 +16,30 @@ public class GoogleJwtHelper {
     @Value("${oauth.google.client_id}")
     private String G_CLIENT_ID;
 
-    public DecodedJWT verifyGoogleToken(String token) {
+    public void verifyGoogleToken(String token) {
         token = token.substring(7);
         DecodedJWT jwt = decodeToken(token);
 
         verifyAudience(jwt);
         verifyIssuer(jwt);
         verifyExpiration(jwt);
-
-        return jwt;
     }
 
     public DecodedJWT decodeToken(String token) {
         return JWT.decode(token);
+    }
+
+    public GoogleProfileDto getProfileInfo(String token) {
+        token = token.substring(7);
+        DecodedJWT jwt = decodeToken(token);
+
+        GoogleProfileDto profileDto = new GoogleProfileDto();
+        profileDto.setGoogleId(jwt.getClaim("sub").asString());
+        profileDto.setName(jwt.getClaim("name").asString());
+        profileDto.setEmail(jwt.getClaim("email").asString());
+        profileDto.setPicture(jwt.getClaim("picture").asString());
+
+        return profileDto;
     }
 
     private void verifyAudience(DecodedJWT jwt) {
@@ -45,7 +56,7 @@ public class GoogleJwtHelper {
 
     private void verifyExpiration(DecodedJWT jwt) {
         Date expiration = jwt.getClaim("exp").asDate();
-        if (expiration.after(new Date()))
+        if (expiration.before(new Date()))
             throw new JWTVerificationException("Session expired");
     }
 }
