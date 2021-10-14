@@ -17,7 +17,6 @@ public class GoogleJwtHelper {
     private String G_CLIENT_ID;
 
     public void verifyGoogleToken(String token) {
-        token = token.substring(7);
         DecodedJWT jwt = decodeToken(token);
 
         verifyAudience(jwt);
@@ -26,11 +25,11 @@ public class GoogleJwtHelper {
     }
 
     public DecodedJWT decodeToken(String token) {
+        token = token.substring(7); // ignore 'Bearer' prefix
         return JWT.decode(token);
     }
 
     public GoogleProfileDto getProfileInfo(String token) {
-        token = token.substring(7);
         DecodedJWT jwt = decodeToken(token);
 
         GoogleProfileDto profileDto = new GoogleProfileDto();

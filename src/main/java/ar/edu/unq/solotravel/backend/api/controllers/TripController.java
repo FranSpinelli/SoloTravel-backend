@@ -1,6 +1,7 @@
 package ar.edu.unq.solotravel.backend.api.controllers;
 
 import ar.edu.unq.solotravel.backend.api.exceptions.NoSuchElementException;
+import ar.edu.unq.solotravel.backend.api.security.ValidateGoogleJwt;
 import ar.edu.unq.solotravel.backend.api.services.TripService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -19,8 +20,10 @@ public class TripController {
         return ResponseEntity.ok().body(tripService.getAllTrips(name));
     }
 
+    @ValidateGoogleJwt
     @GetMapping("/{userId}")
     public ResponseEntity getAllTripsByUser(
+            @RequestHeader("Authorization") String googleToken,
             @PathVariable Integer userId,
             @RequestParam(required = false) String name) throws NoSuchElementException {
         return ResponseEntity.ok().body(tripService.getAllTripsByUser(userId, name));
