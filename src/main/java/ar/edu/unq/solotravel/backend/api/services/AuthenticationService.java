@@ -43,7 +43,7 @@ public class AuthenticationService {
         return new GoogleAuthResponseDto(existentUser.get().getId());
     }
 
-    public TokenResponseDto authenticateTravelAgency(TravelAgencyLoginDto travelAgencyLoginDto) throws NoSuchElementException, LogInException {
+    public TokenResponseDto authenticateTravelAgency(TravelAgencyLoginDto travelAgencyLoginDto) {
        /*ToDo: add integration test*/
         TravelAgency travelAgencyWithEmail = travelAgencyRepository.findByEmail(travelAgencyLoginDto.getEmail())
                .orElseThrow(() -> new LogInException("Incorrect mail or password"));

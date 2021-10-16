@@ -31,7 +31,7 @@ public class AutheticationController {
     }
 
     @PostMapping("/login/internal")
-    public ResponseEntity authenticatieTravelAgency(@RequestBody TravelAgencyLoginDto travelAgencyLoginDto) throws NoSuchElementException, LogInException {
+    public ResponseEntity authenticatieTravelAgency(@RequestBody TravelAgencyLoginDto travelAgencyLoginDto) {
         return ResponseEntity.ok().body(authenticationService.authenticateTravelAgency(travelAgencyLoginDto));
     }
 }

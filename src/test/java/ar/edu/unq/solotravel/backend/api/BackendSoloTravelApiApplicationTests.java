@@ -72,7 +72,7 @@ class BackendSoloTravelApiApplicationTests {
 	void addTripToInexistentUserFavouritesTrips() throws Exception {
 		mockMvc.perform(MockMvcRequestBuilders.put("/users/{userId}/favorites/{tripId}", 100, 1))
 				.andDo(print())
-				.andExpect(status().is(404))
+				.andExpect(status().isNotFound())
 				.andExpect(content().contentType("application/json"))
 				.andExpect(MockMvcResultMatchers.jsonPath("$.message").value("No User with Id: 100"));
 	}
