@@ -6,6 +6,7 @@ import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 import java.util.Arrays;
@@ -18,18 +19,25 @@ public class ValidateGoogleJwtAspectAnnotation {
     @Autowired
     private GoogleJwtHelper googleJwtHelper;
 
+    @Value("${tokenCheck.isEnabled}")
+    private Boolean tokenCheckIsEnabled;
+
     @Around("@annotation(ValidateGoogleJwt)")
     public Object logExecutionTimeAnnotation(ProceedingJoinPoint joinPoint) throws Throwable {
-        Optional<Object> tokenHeader = Arrays.stream(joinPoint.getArgs()).findFirst();
 
-        if (tokenHeader.isPresent() && tokenHeader.get().toString().contains("Bearer ")) {
-            String googleToken = tokenHeader.get().toString();
-            googleJwtHelper.verifyGoogleToken(googleToken);
-        }
-        else {
-            throw new JWTVerificationException("You don't have permission to make this request");
-        }
+        if(tokenCheckIsEnabled){
+            Optional<Object> tokenHeader = Arrays.stream(joinPoint.getArgs()).findFirst();
 
-        return joinPoint.proceed();
+            if (tokenHeader.isPresent() && tokenHeader.get().toString().contains("Bearer ")) {
+                String googleToken = tokenHeader.get().toString();
+                googleJwtHelper.verifyGoogleToken(googleToken);
+            } else {
+                throw new JWTVerificationException("You don't have permission to make this request");
+            }
+            return joinPoint.proceed();
+        } else {
+            System.out.println(tokenCheckIsEnabled);
+            return joinPoint.proceed();
+        }
     }
 }

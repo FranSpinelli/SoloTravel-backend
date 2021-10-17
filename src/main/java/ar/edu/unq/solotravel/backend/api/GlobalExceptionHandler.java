@@ -32,6 +32,4 @@ public class GlobalExceptionHandler {
     public ResponseEntity handleJWTDecodeException(JWTDecodeException jwtDecodeException){
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(new ErrorResponseDto(jwtDecodeException.getMessage()));
     }
-
-
 }
