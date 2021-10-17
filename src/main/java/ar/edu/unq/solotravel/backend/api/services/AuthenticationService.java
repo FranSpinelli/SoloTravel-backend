@@ -5,14 +5,12 @@ import ar.edu.unq.solotravel.backend.api.dtos.GoogleProfileDto;
 import ar.edu.unq.solotravel.backend.api.dtos.TokenResponseDto;
 import ar.edu.unq.solotravel.backend.api.dtos.TravelAgencyLoginDto;
 import ar.edu.unq.solotravel.backend.api.exceptions.LogInException;
-import ar.edu.unq.solotravel.backend.api.exceptions.NoSuchElementException;
 import ar.edu.unq.solotravel.backend.api.helpers.InternalJwtHelper;
 import ar.edu.unq.solotravel.backend.api.models.TravelAgency;
 import ar.edu.unq.solotravel.backend.api.models.Traveler;
 import ar.edu.unq.solotravel.backend.api.repositories.TravelAgencyRepository;
 import ar.edu.unq.solotravel.backend.api.repositories.TravelerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;

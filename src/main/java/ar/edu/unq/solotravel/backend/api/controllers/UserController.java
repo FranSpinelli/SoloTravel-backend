@@ -1,6 +1,5 @@
 package ar.edu.unq.solotravel.backend.api.controllers;
 
-import ar.edu.unq.solotravel.backend.api.exceptions.NoSuchElementException;
 import ar.edu.unq.solotravel.backend.api.security.ValidateGoogleJwt;
 import ar.edu.unq.solotravel.backend.api.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
