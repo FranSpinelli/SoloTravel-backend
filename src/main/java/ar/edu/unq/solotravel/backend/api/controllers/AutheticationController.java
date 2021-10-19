@@ -3,6 +3,7 @@ package ar.edu.unq.solotravel.backend.api.controllers;
 import ar.edu.unq.solotravel.backend.api.dtos.GoogleAuthResponseDto;
 import ar.edu.unq.solotravel.backend.api.dtos.GoogleProfileDto;
 import ar.edu.unq.solotravel.backend.api.dtos.TravelAgencyLoginDto;
+import ar.edu.unq.solotravel.backend.api.exceptions.InvalidJwtException;
 import ar.edu.unq.solotravel.backend.api.exceptions.LogInException;
 import ar.edu.unq.solotravel.backend.api.exceptions.NoSuchElementException;
 import ar.edu.unq.solotravel.backend.api.helpers.GoogleJwtHelper;
@@ -11,6 +12,8 @@ import ar.edu.unq.solotravel.backend.api.services.AuthenticationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import javax.validation.Valid;
 
 @CrossOrigin
 @RestController

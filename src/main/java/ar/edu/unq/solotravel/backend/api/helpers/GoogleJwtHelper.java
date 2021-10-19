@@ -1,8 +1,9 @@
 package ar.edu.unq.solotravel.backend.api.helpers;
 
 import ar.edu.unq.solotravel.backend.api.dtos.GoogleProfileDto;
+import ar.edu.unq.solotravel.backend.api.exceptions.ExpiredSessionException;
+import ar.edu.unq.solotravel.backend.api.exceptions.InvalidJwtException;
 import com.auth0.jwt.JWT;
-import com.auth0.jwt.exceptions.JWTVerificationException;
 import com.auth0.jwt.interfaces.DecodedJWT;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
@@ -44,18 +45,18 @@ public class GoogleJwtHelper {
     private void verifyAudience(DecodedJWT jwt) {
         String aud = jwt.getClaim("aud").asString();
         if (!aud.equals(G_CLIENT_ID))
-            throw new JWTVerificationException("You don't have permission to make this request");
+            throw new InvalidJwtException();
     }
 
     private void verifyIssuer(DecodedJWT jwt) {
         String issuer = jwt.getClaim("iss").asString();
         if (!issuer.equals(G_ISSUER))
-            throw new JWTVerificationException("You don't have permission to make this request");
+            throw new InvalidJwtException();
     }
 
     private void verifyExpiration(DecodedJWT jwt) {
         Date expiration = jwt.getClaim("exp").asDate();
         if (expiration.before(new Date()))
-            throw new JWTVerificationException("Session expired");
+            throw new ExpiredSessionException();
     }
 }
