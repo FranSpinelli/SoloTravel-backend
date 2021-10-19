@@ -1,5 +1,6 @@
 package ar.edu.unq.solotravel.backend.api.security;
 
+import ar.edu.unq.solotravel.backend.api.exceptions.InvalidJwtException;
 import ar.edu.unq.solotravel.backend.api.helpers.GoogleJwtHelper;
 import com.auth0.jwt.exceptions.JWTVerificationException;
 import org.aspectj.lang.ProceedingJoinPoint;
@@ -24,19 +25,17 @@ public class ValidateGoogleJwtAspectAnnotation {
 
     @Around("@annotation(ValidateGoogleJwt)")
     public Object logExecutionTimeAnnotation(ProceedingJoinPoint joinPoint) throws Throwable {
-
         if(tokenCheckIsEnabled){
-            Optional<Object> tokenHeader = Arrays.stream(joinPoint.getArgs()).findFirst();
-
-            if (tokenHeader.isPresent() && tokenHeader.get().toString().contains("Bearer ")) {
+            try {
+                Optional<Object> tokenHeader = Arrays.stream(joinPoint.getArgs()).findFirst();
                 String googleToken = tokenHeader.get().toString();
                 googleJwtHelper.verifyGoogleToken(googleToken);
-            } else {
-                throw new JWTVerificationException("You don't have permission to make this request");
+            }
+            catch (Exception ex) {
+                throw new InvalidJwtException();
             }
             return joinPoint.proceed();
-        } else {
-            System.out.println(tokenCheckIsEnabled);
+        }else{
             return joinPoint.proceed();
         }
     }
