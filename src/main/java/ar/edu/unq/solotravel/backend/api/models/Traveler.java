@@ -14,7 +14,7 @@ import java.util.List;
 public class Traveler extends User{
 
     private String googleId;
-
+    private String picture;
     @OneToMany(fetch = FetchType.LAZY)
     private List<Trip> favorites;
 
