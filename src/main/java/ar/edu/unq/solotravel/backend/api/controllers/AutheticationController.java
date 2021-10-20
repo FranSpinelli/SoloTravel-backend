@@ -10,6 +10,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
+
 @CrossOrigin
 @RestController
 @RequestMapping("/authentication")
@@ -29,7 +31,7 @@ public class AutheticationController {
     }
 
     @PostMapping("/login/internal")
-    public ResponseEntity authenticatieTravelAgency(@RequestBody TravelAgencyLoginDto travelAgencyLoginDto) {
+    public ResponseEntity authenticatieTravelAgency(@RequestBody @Valid TravelAgencyLoginDto travelAgencyLoginDto) {
         return ResponseEntity.ok().body(authenticationService.authenticateTravelAgency(travelAgencyLoginDto));
     }
 }

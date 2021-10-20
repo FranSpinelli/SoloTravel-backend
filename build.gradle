@@ -33,6 +33,11 @@ dependencies {
 	//JWT
 	implementation 'com.auth0:java-jwt:3.18.2'
 	implementation group: 'io.jsonwebtoken', name: 'jjwt', version: '0.7.0'
+	//VALIDATIONS DEPENDENCIES
+	implementation group: 'org.springframework.boot', name: 'spring-boot-starter-validation', version: '2.5.1'
+	implementation group: 'javax.validation', name: 'validation-api', version: '2.0.1.Final'
+	implementation group: 'org.hibernate.validator', name: 'hibernate-validator', version: '6.2.0.Final'
+	implementation group: 'javax.el', name: 'javax.el-api', version: '3.0.0'
 }
 
 test {
