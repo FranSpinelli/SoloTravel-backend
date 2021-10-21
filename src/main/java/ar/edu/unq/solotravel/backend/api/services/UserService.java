@@ -6,10 +6,9 @@ import ar.edu.unq.solotravel.backend.api.exceptions.NoSuchElementException;
 import ar.edu.unq.solotravel.backend.api.models.TravelAgency;
 import ar.edu.unq.solotravel.backend.api.models.Traveler;
 import ar.edu.unq.solotravel.backend.api.models.Trip;
-import ar.edu.unq.solotravel.backend.api.models.User;
+import ar.edu.unq.solotravel.backend.api.repositories.TravelerRepository;
 import ar.edu.unq.solotravel.backend.api.repositories.TravelAgencyRepository;
 import ar.edu.unq.solotravel.backend.api.repositories.TripRepository;
-import ar.edu.unq.solotravel.backend.api.repositories.TravelerRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -29,7 +28,7 @@ public class UserService {
     @Autowired
     private ModelMapper modelMapper;
 
-    public TripListResponseDto getUserFavorites(Integer userId) throws NoSuchElementException {
+    public TripListResponseDto getUserFavorites(Integer userId) {
 
         Traveler userWithId = travelerRepository.findById(userId).orElseThrow(() -> new NoSuchElementException("No User with Id: " + userId));
 
@@ -40,7 +39,7 @@ public class UserService {
         return new TripListResponseDto(tripsDtoList);
     }
 
-    public void addTripToUserFavorites(Integer userId, Integer tripId) throws NoSuchElementException {
+    public void addTripToUserFavorites(Integer userId, Integer tripId) {
 
         Traveler userWithId = travelerRepository.findById(userId).orElseThrow(() -> new NoSuchElementException("No User with Id: " + userId));
         Trip tripWithId = tripRepository.findById(tripId).orElseThrow(() -> new NoSuchElementException("No Trip with Id: " + tripId));
@@ -48,7 +47,7 @@ public class UserService {
         travelerRepository.save(userWithId);
     }
 
-    public void removeTripFromUserFavorites(Integer userId, Integer tripId) throws NoSuchElementException {
+    public void removeTripFromUserFavorites(Integer userId, Integer tripId) {
 
         Traveler userWithId = travelerRepository.findById(userId).orElseThrow(() -> new NoSuchElementException("No User with Id: " + userId));
         Trip tripWithId = tripRepository.findById(tripId).orElseThrow(() -> new NoSuchElementException("No Trip with Id: " + tripId));
@@ -56,7 +55,7 @@ public class UserService {
         travelerRepository.save(userWithId);
     }
 
-    public TripListResponseDto getAgencyTrips(Integer agencyId) throws NoSuchElementException {
+    public TripListResponseDto getAgencyTrips(Integer agencyId) {
 
         TravelAgency agencyWithId = travelAgencyRepository.findById(agencyId).orElseThrow(() -> new NoSuchElementException("No Agency with Id: " + agencyId));
 

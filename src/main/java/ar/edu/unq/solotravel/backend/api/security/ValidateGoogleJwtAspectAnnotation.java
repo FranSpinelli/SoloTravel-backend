@@ -7,6 +7,7 @@ import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 import java.util.Arrays;
@@ -19,17 +20,23 @@ public class ValidateGoogleJwtAspectAnnotation {
     @Autowired
     private GoogleJwtHelper googleJwtHelper;
 
+    @Value("${tokenCheck.isEnabled}")
+    private Boolean tokenCheckIsEnabled;
+
     @Around("@annotation(ValidateGoogleJwt)")
     public Object logExecutionTimeAnnotation(ProceedingJoinPoint joinPoint) throws Throwable {
-        try {
-            Optional<Object> tokenHeader = Arrays.stream(joinPoint.getArgs()).findFirst();
-            String googleToken = tokenHeader.get().toString();
-            googleJwtHelper.verifyGoogleToken(googleToken);
+        if(tokenCheckIsEnabled){
+            try {
+                Optional<Object> tokenHeader = Arrays.stream(joinPoint.getArgs()).findFirst();
+                String googleToken = tokenHeader.get().toString();
+                googleJwtHelper.verifyGoogleToken(googleToken);
+            }
+            catch (Exception ex) {
+                throw new InvalidJwtException();
+            }
+            return joinPoint.proceed();
+        }else{
+            return joinPoint.proceed();
         }
-        catch (Exception ex) {
-            throw new InvalidJwtException();
-        }
-
-        return joinPoint.proceed();
     }
 }

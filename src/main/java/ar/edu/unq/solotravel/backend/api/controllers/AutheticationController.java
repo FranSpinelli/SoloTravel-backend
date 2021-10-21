@@ -3,9 +3,6 @@ package ar.edu.unq.solotravel.backend.api.controllers;
 import ar.edu.unq.solotravel.backend.api.dtos.GoogleAuthResponseDto;
 import ar.edu.unq.solotravel.backend.api.dtos.GoogleProfileDto;
 import ar.edu.unq.solotravel.backend.api.dtos.TravelAgencyLoginDto;
-import ar.edu.unq.solotravel.backend.api.exceptions.InvalidJwtException;
-import ar.edu.unq.solotravel.backend.api.exceptions.LogInException;
-import ar.edu.unq.solotravel.backend.api.exceptions.NoSuchElementException;
 import ar.edu.unq.solotravel.backend.api.helpers.GoogleJwtHelper;
 import ar.edu.unq.solotravel.backend.api.security.ValidateGoogleJwt;
 import ar.edu.unq.solotravel.backend.api.services.AuthenticationService;
@@ -34,7 +31,7 @@ public class AutheticationController {
     }
 
     @PostMapping("/login/internal")
-    public ResponseEntity authenticatieTravelAgency(@RequestBody TravelAgencyLoginDto travelAgencyLoginDto) throws NoSuchElementException, LogInException {
+    public ResponseEntity authenticatieTravelAgency(@RequestBody @Valid TravelAgencyLoginDto travelAgencyLoginDto) {
         return ResponseEntity.ok().body(authenticationService.authenticateTravelAgency(travelAgencyLoginDto));
     }
 }
