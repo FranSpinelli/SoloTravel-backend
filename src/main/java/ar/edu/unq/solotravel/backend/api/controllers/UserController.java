@@ -46,7 +46,7 @@ public class UserController {
     @GetMapping("/{agencyId}/trips")
     public ResponseEntity getAgencyTrips(
             @RequestHeader("Authorization") String token,
-            @PathVariable Integer agencyId) throws NoSuchElementException {
+            @PathVariable Integer agencyId) {
         return ResponseEntity.ok().body(userService.getAgencyTrips(agencyId));
     }
 }
