@@ -3,9 +3,11 @@ package ar.edu.unq.solotravel.backend.api.services;
 import ar.edu.unq.solotravel.backend.api.dtos.TripDto;
 import ar.edu.unq.solotravel.backend.api.dtos.TripListResponseDto;
 import ar.edu.unq.solotravel.backend.api.exceptions.NoSuchElementException;
+import ar.edu.unq.solotravel.backend.api.models.TravelAgency;
 import ar.edu.unq.solotravel.backend.api.models.Traveler;
 import ar.edu.unq.solotravel.backend.api.models.Trip;
 import ar.edu.unq.solotravel.backend.api.models.User;
+import ar.edu.unq.solotravel.backend.api.repositories.TravelAgencyRepository;
 import ar.edu.unq.solotravel.backend.api.repositories.TripRepository;
 import ar.edu.unq.solotravel.backend.api.repositories.TravelerRepository;
 import org.modelmapper.ModelMapper;
@@ -22,6 +24,8 @@ public class UserService {
     private TravelerRepository travelerRepository;
     @Autowired
     private TripRepository tripRepository;
+    @Autowired
+    private TravelAgencyRepository travelAgencyRepository;
     @Autowired
     private ModelMapper modelMapper;
 
@@ -50,5 +54,14 @@ public class UserService {
         Trip tripWithId = tripRepository.findById(tripId).orElseThrow(() -> new NoSuchElementException("No Trip with Id: " + tripId));
         userWithId.removeFavorite(tripWithId);
         travelerRepository.save(userWithId);
+    }
+
+    public TripListResponseDto getAgencyTrips(Integer agencyId) throws NoSuchElementException {
+
+        TravelAgency agencyWithId = travelAgencyRepository.findById(agencyId).orElseThrow(() -> new NoSuchElementException("No Agency with Id: " + agencyId));
+
+        List<TripDto> tripsDtoList = agencyWithId.getTrips().stream().map(trip -> modelMapper.map(trip, TripDto.class)).collect(Collectors.toList());
+
+        return new TripListResponseDto(tripsDtoList);
     }
 }

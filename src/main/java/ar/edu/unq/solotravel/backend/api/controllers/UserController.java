@@ -42,4 +42,12 @@ public class UserController {
         userService.removeTripFromUserFavorites(userId, tripId);
         return ResponseEntity.ok().build();
     }
+
+    // TODO: Separate UsersController in TravelerController and AgencyController ?
+    @GetMapping("/{agencyId}/trips")
+    public ResponseEntity getAgencyTrips(
+            @RequestHeader("Authorization") String token,
+            @PathVariable Integer agencyId) throws NoSuchElementException {
+        return ResponseEntity.ok().body(userService.getAgencyTrips(agencyId));
+    }
 }

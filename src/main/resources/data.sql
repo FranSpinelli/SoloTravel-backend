@@ -72,6 +72,22 @@ INSERT INTO trips (id, name, destination, image, description, price, start_date,
 --    ('guestGoogleId', 1)
 
 INSERT INTO users (id, email, name, picture) VALUES
-    (-1, 'guestTravelAgent@gmail.com', 'guestTravelAgency', 'guestTravelAgency_image');
+    (-1, 'guestTravelAgent@gmail.com', 'guestTravelAgency', 'guestTravelAgency_image'),
+    (-2, 'guest2@agency.com', 'guestTravelAgency 2', 'guestTravelAgency_image'),
+    (-3, 'guest3@agency.com', 'guestTravelAgency 3', 'guestTravelAgency_image');
 INSERT INTO travel_agencies (password, id) VALUES
-    ('guest', -1);
+    ('guest', -1),
+    ('guest', -2),
+    ('guest', -3);
+INSERT INTO travel_agencies_trips (travel_agency_id, trips_id) VALUES
+    (-1, 1),
+    (-1, 2),
+    (-1, 3),
+    (-1, 4),
+    (-2, 5),
+    (-2, 6),
+    (-2, 7),
+    (-2, 8),
+    (-3, 9),
+    (-3, 10),
+    (-3, 11);
