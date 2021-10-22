@@ -71,12 +71,26 @@ INSERT INTO trips (id, name, destination, image, description, price, start_date,
 --INSERT INTO travelers (google_id, id) VALUES
 --    ('guestGoogleId', 1)
 
+INSERT INTO locations (id, province, city, street, number) VALUES
+    (-1, "Buenos Aires", "Quilmes", "Sarmiento", 111),
+    (-2, "Buenos Aires", "Quilmes", "Sarmiento", 222),
+    (-3, "Buenos Aires", "Quilmes", "Sarmiento", 333);
+
+INSERT INTO managers (id, first_Name, surname, dni, cuit) VALUES
+    (-1, "Nicolas", "Ruiz", 11111111, 20111111115),
+    (-2, "Nicolas", "Ruiz", 22222222, 20222222225),
+    (-3, "Nicolas", "Ruiz", 33333333, 20333333335);
+
 INSERT INTO users (id, email, name) VALUES
-    (-1, 'guestTravelAgent@gmail.com', 'guestTravelAgency');
-INSERT INTO travel_agencies (password, id) VALUES
-    ('guest', -1),
-    ('guest', -2),
-    ('guest', -3);
+    (-1, 'guestTravelAgent1@gmail.com', 'mockGuestTravelAgency1'),
+    (-2, 'guestTravelAgent2@gmail.com', 'mockGuestTravelAgency2'),
+    (-3, 'guestTravelAgent3@gmail.com', 'mockGuestTravelAgency3');
+
+INSERT INTO travel_agencies (password, id, cuit, fiscal_name, location_id, manager_id) VALUES
+    ('guest', -1, 11111111111, "MockTravelAgency1", -1, -1),
+    ('guest', -2, 22222222222, "MockTravelAgency2", -2, -2),
+    ('guest', -3, 33333333333, "MockTravelAgency3", -3, -3);
+
 INSERT INTO travel_agencies_trips (travel_agency_id, trips_id) VALUES
     (-1, 1),
     (-1, 2),

@@ -14,6 +14,16 @@ import java.util.List;
 public class TravelAgency extends User{
 
     private String password;
+    private String fiscalName;
+    private Long cuit;
+
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "location_id", referencedColumnName = "id")
+    private Location location;
+
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "manager_id", referencedColumnName = "id")
+    private Manager manager;
 
     @OneToMany(fetch = FetchType.LAZY)
     private List<Trip> trips;
