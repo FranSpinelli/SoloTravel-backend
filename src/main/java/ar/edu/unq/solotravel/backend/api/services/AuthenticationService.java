@@ -51,6 +51,6 @@ public class AuthenticationService {
        }
 
        String token = internalJwtHelper.getTokenFor(travelAgencyWithEmail.getEmail());
-       return new TokenResponseDto(token);
+       return new TokenResponseDto(token, travelAgencyWithEmail.getName(), travelAgencyWithEmail.getId());
     }
 }
