@@ -1,6 +1,7 @@
 package ar.edu.unq.solotravel.backend.api.models;
 
 import lombok.Getter;
+import lombok.Setter;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
@@ -10,9 +11,11 @@ import java.time.temporal.ChronoUnit;
 @Entity
 @Table(name = "trips")
 @Getter
+@Setter
 public class Trip {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
     private String name;
     private String destination;

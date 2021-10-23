@@ -55,8 +55,9 @@ public class TripService {
         TravelAgency agencyWithId = travelAgencyRepository.findById(agencyId).orElseThrow(() -> new NoSuchElementException("No Agency with Id: " + agencyId));
 
         Trip newTrip = modelMapper.map(createTripDto, Trip.class);
-        agencyWithId.addTrip(newTrip);
+        tripRepository.save(newTrip);
 
+        agencyWithId.addTrip(newTrip);
         travelAgencyRepository.save(agencyWithId);
     }
 

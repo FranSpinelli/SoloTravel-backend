@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.time.LocalDate;
 import java.util.Date;
 
 @AllArgsConstructor
@@ -16,7 +17,7 @@ public class CreateTripDto {
     private String destination;
     private String image;
     private String description;
-    private double price;
-    private Date startDate;
-    private Date endDate;
+    private Double price;
+    private LocalDate startDate;
+    private LocalDate endDate;
 }
