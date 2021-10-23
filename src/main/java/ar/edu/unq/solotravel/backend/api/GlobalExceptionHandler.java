@@ -2,10 +2,7 @@ package ar.edu.unq.solotravel.backend.api;
 
 import ar.edu.unq.solotravel.backend.api.dtos.GenericErrorResponseDto;
 import ar.edu.unq.solotravel.backend.api.dtos.ValidationErrorResponseDTO;
-import ar.edu.unq.solotravel.backend.api.exceptions.ExpiredSessionException;
-import ar.edu.unq.solotravel.backend.api.exceptions.InvalidJwtException;
-import ar.edu.unq.solotravel.backend.api.exceptions.LogInException;
-import ar.edu.unq.solotravel.backend.api.exceptions.NoSuchElementException;
+import ar.edu.unq.solotravel.backend.api.exceptions.*;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.FieldError;
@@ -28,6 +25,11 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(LogInException.class)
     public ResponseEntity handleLogInException(LogInException logInException){
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(new GenericErrorResponseDto(logInException.getMessage()));
+    }
+
+    @ExceptionHandler(RegisterException.class)
+    public ResponseEntity handleRegisterException(RegisterException registerException){
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(new GenericErrorResponseDto(registerException.getMessage()));
     }
 
     @ExceptionHandler(InvalidJwtException.class)
