@@ -17,4 +17,8 @@ public class TravelAgency extends User{
 
     @OneToMany(fetch = FetchType.LAZY)
     private List<Trip> trips;
+
+    public void addTrip(Trip trip){
+        trips.add(trip);
+    }
 }
