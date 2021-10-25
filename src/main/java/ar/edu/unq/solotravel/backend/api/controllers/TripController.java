@@ -26,7 +26,7 @@ public class TripController {
     }
 
     @ValidateGoogleJwt
-    @GetMapping("/{userId}")
+    @GetMapping("/user/{userId}")
     public ResponseEntity getAllTripsByUser(
             @RequestHeader("Authorization") String googleToken,
             @PathVariable Integer userId,
@@ -41,5 +41,12 @@ public class TripController {
             @RequestBody CreateTripDto createTripDto) {
         tripService.createTrip(agencyId, createTripDto);
         return ResponseEntity.ok(HttpStatus.CREATED);
+    }
+
+    @GetMapping("/{tripId}")
+    public ResponseEntity getTripById(
+            @RequestHeader("Authorization") String token,
+            @PathVariable Integer tripId) throws NoSuchElementException {
+        return ResponseEntity.ok().body(tripService.getTripById(tripId));
     }
 }

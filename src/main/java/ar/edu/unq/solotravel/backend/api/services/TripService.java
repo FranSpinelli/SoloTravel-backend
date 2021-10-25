@@ -1,6 +1,7 @@
 package ar.edu.unq.solotravel.backend.api.services;
 
 import ar.edu.unq.solotravel.backend.api.dtos.CreateTripDto;
+import ar.edu.unq.solotravel.backend.api.dtos.TripDetailsDto;
 import ar.edu.unq.solotravel.backend.api.dtos.TripDto;
 import ar.edu.unq.solotravel.backend.api.dtos.TripListResponseDto;
 import ar.edu.unq.solotravel.backend.api.exceptions.NoSuchElementException;
@@ -59,6 +60,12 @@ public class TripService {
 
         agencyWithId.addTrip(newTrip);
         travelAgencyRepository.save(agencyWithId);
+    }
+
+    public TripDetailsDto getTripById(Integer tripId) throws NoSuchElementException {
+        Trip tripWithId = tripRepository.findById(tripId).orElseThrow(() -> new NoSuchElementException("No Trip with Id: " + tripId));
+
+        return modelMapper.map(tripWithId, TripDetailsDto.class);
     }
 
     private TripListResponseDto setFavoritesTripsFromUser(List<TripDto> trips, List<Trip> userFavorites) {
