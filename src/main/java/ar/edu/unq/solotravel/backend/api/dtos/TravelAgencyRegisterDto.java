@@ -66,7 +66,7 @@ public class TravelAgencyRegisterDto {
     private String managerSurname;
     @NotNull(message = "manager dni field can't be null in the body json")
     @Min(value = 11111111, message = "Please provide a valid dni number")
-    @Max(value = 11111111, message = "Please provide a valid dni number")
+    @Max(value = 99999999, message = "Please provide a valid dni number")
     private Integer managerDni;
     @NotNull(message = "manager cuit field can't be null in the body json")
     @Min(value = 11111111111L, message = "Please provide a valid cuit number")
