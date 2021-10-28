@@ -2,6 +2,7 @@ package ar.edu.unq.solotravel.backend.api.controllers;
 
 import ar.edu.unq.solotravel.backend.api.dtos.CreateTripDto;
 import ar.edu.unq.solotravel.backend.api.dtos.TravelAgencyLoginDto;
+import ar.edu.unq.solotravel.backend.api.dtos.UpdateTripDto;
 import ar.edu.unq.solotravel.backend.api.exceptions.NoSuchElementException;
 import ar.edu.unq.solotravel.backend.api.security.ValidateGoogleJwt;
 import ar.edu.unq.solotravel.backend.api.services.TripService;
@@ -25,6 +26,7 @@ public class TripController {
         return ResponseEntity.ok().body(tripService.getAllTrips(name));
     }
 
+    // TODO: Move to TravelerController ?
     @ValidateGoogleJwt
     @GetMapping("/user/{userId}")
     public ResponseEntity getAllTripsByUser(
@@ -34,6 +36,7 @@ public class TripController {
         return ResponseEntity.ok().body(tripService.getAllTripsByUser(userId, name));
     }
 
+    // TODO: Move to AgencyController ?
     @PostMapping("/{agencyId}/new")
     public ResponseEntity createTrip(
             @RequestHeader("Authorization") String token,
@@ -48,5 +51,16 @@ public class TripController {
             @RequestHeader("Authorization") String token,
             @PathVariable Integer tripId) throws NoSuchElementException {
         return ResponseEntity.ok().body(tripService.getTripById(tripId));
+    }
+
+    // TODO: Move to AgencyController ?
+    @PutMapping("/{agencyId}/edition/{tripId}")
+    public ResponseEntity updateTrip(
+            @RequestHeader("Authorization") String token,
+            @PathVariable Integer agencyId,
+            @PathVariable Integer tripId,
+            @RequestBody UpdateTripDto updateTripDto) {
+        tripService.updateTrip(agencyId, tripId, updateTripDto);
+        return ResponseEntity.ok(HttpStatus.OK);
     }
 }
