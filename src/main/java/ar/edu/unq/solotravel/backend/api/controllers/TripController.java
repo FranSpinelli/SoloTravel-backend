@@ -63,4 +63,13 @@ public class TripController {
         tripService.updateTrip(agencyId, tripId, updateTripDto);
         return ResponseEntity.ok(HttpStatus.OK);
     }
+
+    @DeleteMapping("/{agencyId}/deletion/{tripId}")
+    public ResponseEntity deleteTrip(
+            @RequestHeader("Authorization") String token,
+            @PathVariable Integer agencyId,
+            @PathVariable Integer tripId) {
+        tripService.deleteTrip(agencyId, tripId);
+        return ResponseEntity.ok(HttpStatus.OK);
+    }
 }

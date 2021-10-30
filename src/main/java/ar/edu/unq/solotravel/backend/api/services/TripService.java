@@ -81,6 +81,16 @@ public class TripService {
         return modelMapper.map(tripWithId, TripDetailsDto.class);
     }
 
+    public void deleteTrip(Integer agencyId, Integer tripId) {
+        if (!tripRepository.existsById(tripId))
+            throw new NoSuchElementException("No Trip with Id: " + tripId);
+        TravelAgency agencyWithId = travelAgencyRepository.findById(agencyId).orElseThrow(() -> new NoSuchElementException("No Agency with Id: " + agencyId));
+        if (agencyWithId.getTrips().stream().noneMatch(trip -> trip.getId().equals(tripId)))
+            throw new NoSuchElementException("The Agency does not contain a trip with Id: " + tripId);
+
+        tripRepository.deleteById(tripId);
+    }
+
     private TripListResponseDto setFavoritesTripsFromUser(List<TripDto> trips, List<Trip> userFavorites) {
         trips.forEach(tripDto -> {
             if (userFavorites.stream().anyMatch(trip -> tripDto.getId().equals(trip.getId()))) {
