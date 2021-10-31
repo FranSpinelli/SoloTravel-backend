@@ -84,7 +84,11 @@ INSERT INTO managers (id, first_Name, surname, dni, cuit) VALUES
 INSERT INTO users (id, email, name) VALUES
     (-1, 'guestTravelAgent1@gmail.com', 'mockGuestTravelAgency1'),
     (-2, 'guestTravelAgent2@gmail.com', 'mockGuestTravelAgency2'),
-    (-3, 'guestTravelAgent3@gmail.com', 'mockGuestTravelAgency3');
+    (-3, 'guestTravelAgent3@gmail.com', 'mockGuestTravelAgency3'),
+    (-4, 'guestTraveler@gmail.com', 'mockGuestTraveler1');
+
+INSERT INTO travelers (google_id, picture, id) VALUES
+    ('mockGuestGoogleId', 'mockGuestPicture', -4);
 
 INSERT INTO travel_agencies (password, id, cuit, fiscal_name, location_id, manager_id) VALUES
     ('guest', -1, 11111111111, "MockTravelAgency1", -1, -1),

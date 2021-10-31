@@ -67,6 +67,6 @@ INSERT INTO trips (id, name, destination, image, description, price, start_date,
     );
 
 INSERT INTO users (id, email, name) VALUES
-    (1, 'guest@gmail.com', 'guest');
+    (-1, 'guest@gmail.com', 'guest');
 INSERT INTO travelers (google_id, id, picture) VALUES
-    ('guestGoogleId', 1, 'guest_image')
+    ('guestGoogleId', -1, 'guest_image')
