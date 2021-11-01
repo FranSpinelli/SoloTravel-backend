@@ -36,6 +36,13 @@ public class TripController {
         return ResponseEntity.ok().body(tripService.getAllTripsByUser(userId, name));
     }
 
+    @GetMapping("/{tripId}")
+    public ResponseEntity getTripById(
+            @RequestHeader("Authorization") String token,
+            @PathVariable Integer tripId) throws NoSuchElementException {
+        return ResponseEntity.ok().body(tripService.getTripById(tripId));
+    }
+
     // TODO: Move to AgencyController ?
     @PostMapping("/{agencyId}/new")
     public ResponseEntity createTrip(
@@ -46,14 +53,6 @@ public class TripController {
         return ResponseEntity.ok(HttpStatus.CREATED);
     }
 
-    @GetMapping("/{tripId}")
-    public ResponseEntity getTripById(
-            @RequestHeader("Authorization") String token,
-            @PathVariable Integer tripId) throws NoSuchElementException {
-        return ResponseEntity.ok().body(tripService.getTripById(tripId));
-    }
-
-    // TODO: Move to AgencyController ?
     @PutMapping("/{agencyId}/edition/{tripId}")
     public ResponseEntity updateTrip(
             @RequestHeader("Authorization") String token,

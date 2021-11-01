@@ -61,18 +61,19 @@ public class TripService {
 
     public void updateTrip(Integer agencyId, Integer tripId, UpdateTripDto updateTripDto) {
         TravelAgency agencyWithId = travelAgencyRepository.findById(agencyId).orElseThrow(() -> new NoSuchElementException("No Agency with Id: " + agencyId));
-        if (agencyWithId.getTrips().stream().noneMatch(trip -> trip.getId().equals(tripId)) || !tripId.equals(updateTripDto.getId()))
+        if (agencyWithId.getTrips().stream().anyMatch(trip -> trip.getId().equals(tripId)) || !tripId.equals(updateTripDto.getId())){
+            Trip tripWithId = tripRepository.findById(tripId).orElseThrow(() -> new NoSuchElementException("No Trip with Id: " + tripId));
+            tripWithId.setName(updateTripDto.getName());
+            tripWithId.setDestination(updateTripDto.getDestination());
+            tripWithId.setImage(updateTripDto.getImage());
+            tripWithId.setDescription(updateTripDto.getDescription());
+            tripWithId.setPrice(updateTripDto.getPrice());
+            tripWithId.setStartDate(updateTripDto.getStartDate());
+            tripWithId.setEndDate(updateTripDto.getEndDate());
+            tripRepository.save(tripWithId);
+        }else{
             throw new NoSuchElementException("The Agency does not contain a trip with Id: " + tripId);
-
-        Trip tripWithId = tripRepository.findById(tripId).orElseThrow(() -> new NoSuchElementException("No Trip with Id: " + tripId));
-        tripWithId.setName(updateTripDto.getName());
-        tripWithId.setDestination(updateTripDto.getDestination());
-        tripWithId.setImage(updateTripDto.getImage());
-        tripWithId.setDescription(updateTripDto.getDescription());
-        tripWithId.setPrice(updateTripDto.getPrice());
-        tripWithId.setStartDate(updateTripDto.getStartDate());
-        tripWithId.setEndDate(updateTripDto.getEndDate());
-        tripRepository.save(tripWithId);
+        }
     }
 
     public TripDetailsDto getTripById(Integer tripId) throws NoSuchElementException {
@@ -82,13 +83,16 @@ public class TripService {
     }
 
     public void deleteTrip(Integer agencyId, Integer tripId) {
-        if (!tripRepository.existsById(tripId))
-            throw new NoSuchElementException("No Trip with Id: " + tripId);
-        TravelAgency agencyWithId = travelAgencyRepository.findById(agencyId).orElseThrow(() -> new NoSuchElementException("No Agency with Id: " + agencyId));
-        if (agencyWithId.getTrips().stream().noneMatch(trip -> trip.getId().equals(tripId)))
-            throw new NoSuchElementException("The Agency does not contain a trip with Id: " + tripId);
 
-        tripRepository.deleteById(tripId);
+        TravelAgency agencyWithId = travelAgencyRepository.findById(agencyId).orElseThrow(() -> new NoSuchElementException("No Agency with Id: " + agencyId));
+        Trip tripWithId = tripRepository.findById(tripId).orElseThrow(() -> new NoSuchElementException("No Trip with Id: " + tripId));
+
+        if (agencyWithId.getTrips().stream().anyMatch(trip -> trip.getId().equals(tripId))){
+            agencyWithId.removeTrip(tripWithId);
+            tripRepository.deleteById(tripId);
+        }else{
+            throw new NoSuchElementException("The Agency does not contain a trip with Id: " + tripId);
+        }
     }
 
     private TripListResponseDto setFavoritesTripsFromUser(List<TripDto> trips, List<Trip> userFavorites) {

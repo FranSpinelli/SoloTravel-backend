@@ -31,4 +31,5 @@ public class TravelAgency extends User{
     public void addTrip(Trip trip){
         trips.add(trip);
     }
+    public void removeTrip(Trip trip) {trips.remove(trip); }
 }

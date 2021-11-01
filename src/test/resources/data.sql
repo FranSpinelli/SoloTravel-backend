@@ -66,7 +66,18 @@ INSERT INTO trips (id, name, destination, image, description, price, start_date,
         8503, '2022-02-03', '2022-02-015', 'CATEGORY2'
     );
 
+INSERT INTO managers (id, first_Name, surname, dni, cuit) VALUES
+    (-1, 'Nicolas', 'Ruiz', 11111111, 20111111115);
+
+INSERT INTO locations (id, province, city, street, number) VALUES
+    (-1, 'Buenos Aires', 'Quilmes', 'Sarmiento', 111);
+
 INSERT INTO users (id, email, name) VALUES
-    (-1, 'guest@gmail.com', 'guest');
+    (-1, 'guest@gmail.com', 'guest'),
+    (-2, 'guestTravelAgent1@gmail.com', 'mockGuestTravelAgency1');
+
 INSERT INTO travelers (google_id, id, picture) VALUES
-    ('guestGoogleId', -1, 'guest_image')
+    ('guestGoogleId', -1, 'guest_image');
+
+INSERT INTO travel_agencies (password, id, cuit, fiscal_name, location_id, manager_id) VALUES
+    ('guest', -2, 11111111111, 'MockTravelAgency1', -1, -1);
