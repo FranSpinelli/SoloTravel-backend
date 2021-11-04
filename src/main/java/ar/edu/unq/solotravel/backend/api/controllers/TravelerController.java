@@ -1,6 +1,8 @@
 package ar.edu.unq.solotravel.backend.api.controllers;
 
+import ar.edu.unq.solotravel.backend.api.exceptions.NoSuchElementException;
 import ar.edu.unq.solotravel.backend.api.security.ValidateGoogleJwt;
+import ar.edu.unq.solotravel.backend.api.services.TripService;
 import ar.edu.unq.solotravel.backend.api.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -13,6 +15,9 @@ public class TravelerController {
 
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private TripService tripService;
 
     @ValidateGoogleJwt
     @GetMapping("/{userId}/favorites")
@@ -42,11 +47,12 @@ public class TravelerController {
         return ResponseEntity.ok().build();
     }
 
-    // TODO: Separate UsersController in TravelerController and AgencyController ?
-    @GetMapping("/{agencyId}/trips")
-    public ResponseEntity getAgencyTrips(
-            @RequestHeader("Authorization") String token,
-            @PathVariable Integer agencyId) {
-        return ResponseEntity.ok().body(userService.getAgencyTrips(agencyId));
+    @ValidateGoogleJwt
+    @GetMapping("/{userId}")
+    public ResponseEntity getTravelerTripsConsideringFavourites(
+            @RequestHeader("Authorization") String googleToken,
+            @PathVariable Integer userId,
+            @RequestParam(required = false) String name) throws NoSuchElementException {
+        return ResponseEntity.ok().body(tripService.getAllTripsByUser(userId, name));
     }
 }

@@ -81,3 +81,16 @@ INSERT INTO travelers (google_id, id, picture) VALUES
 
 INSERT INTO travel_agencies (password, id, cuit, fiscal_name, location_id, manager_id) VALUES
     ('guest', -2, 11111111111, 'MockTravelAgency1', -1, -1);
+
+INSERT INTO travel_agencies_trips (travel_agency_id, trips_id) VALUES
+    (-2, -1),
+    (-2, -2),
+    (-2, -3),
+    (-2, -4),
+    (-2, -6),
+    (-2, -5),
+    (-2, -7),
+    (-2, -8),
+    (-2, -9),
+    (-2, -10),
+    (-2, -11);
