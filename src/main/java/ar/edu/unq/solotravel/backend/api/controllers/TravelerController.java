@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
 
 @CrossOrigin
 @RestController
-@RequestMapping("/users")
+@RequestMapping("/travelers")
 public class TravelerController {
 
     @Autowired

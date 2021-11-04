@@ -100,7 +100,7 @@ class BackendSoloTravelApiApplicationTests {
 
 	@Test
 	void getAllTripsForGivenUser() throws Exception {
-		mockMvc.perform(MockMvcRequestBuilders.get("/users/{userId}", -1)
+		mockMvc.perform(MockMvcRequestBuilders.get("/travelers/{userId}", -1)
 				.header("Authorization", "Bearer mockJwtToken"))
 				.andDo(print())
 				.andExpect(status().isOk())
@@ -111,7 +111,7 @@ class BackendSoloTravelApiApplicationTests {
 
 	@Test
 	void getAllTripsForGivenUserPassingWrongUserId() throws Exception {
-		mockMvc.perform(MockMvcRequestBuilders.get("/users/{userId}", 200)
+		mockMvc.perform(MockMvcRequestBuilders.get("/travelers/{userId}", 200)
 				.header("Authorization", "Bearer mockJwtToken"))
 				.andDo(print())
 				.andExpect(status().is(404))
@@ -121,7 +121,7 @@ class BackendSoloTravelApiApplicationTests {
 
 	@Test
 	void getAllTripsPassingForGivenUserNameFilter() throws Exception {
-		mockMvc.perform(MockMvcRequestBuilders.get("/users/{userId}", -1)
+		mockMvc.perform(MockMvcRequestBuilders.get("/travelers/{userId}", -1)
 				.param("name", "salta")
 				.header("Authorization", "Bearer mockJwtToken"))
 				.andDo(print())
@@ -227,7 +227,7 @@ class BackendSoloTravelApiApplicationTests {
 
 	@Test
 	void addTripToUserFavouritesTrips() throws Exception {
-		mockMvc.perform(MockMvcRequestBuilders.put("/users/{userId}/favorites/{tripId}", -1, -1)
+		mockMvc.perform(MockMvcRequestBuilders.put("/travelers/{userId}/favorites/{tripId}", -1, -1)
 				.header("Authorization", "Bearer mockJwtToken"))
 				.andDo(print())
 				.andExpect(status().isOk());
@@ -235,7 +235,7 @@ class BackendSoloTravelApiApplicationTests {
 
 	@Test
 	void addInexistentTripToUserFavouritesTrips() throws Exception {
-		mockMvc.perform(MockMvcRequestBuilders.put("/users/{userId}/favorites/{tripId}", -1, 100)
+		mockMvc.perform(MockMvcRequestBuilders.put("/travelers/{userId}/favorites/{tripId}", -1, 100)
 				.header("Authorization", "Bearer mockJwtToken"))
 				.andDo(print())
 				.andExpect(status().is(404))
@@ -245,7 +245,7 @@ class BackendSoloTravelApiApplicationTests {
 
 	@Test
 	void addTripToInexistentUserFavouritesTrips() throws Exception {
-		mockMvc.perform(MockMvcRequestBuilders.put("/users/{userId}/favorites/{tripId}", 100, -1)
+		mockMvc.perform(MockMvcRequestBuilders.put("/travelers/{userId}/favorites/{tripId}", 100, -1)
 				.header("Authorization", "Bearer mockJwtToken"))
 				.andDo(print())
 				.andExpect(status().isNotFound())
@@ -255,12 +255,12 @@ class BackendSoloTravelApiApplicationTests {
 
 	@Test
 	void removeTripFromUserFavouritesTrips() throws Exception {
-		mockMvc.perform(MockMvcRequestBuilders.put("/users/{userId}/favorites/{tripId}", -1, -1)
+		mockMvc.perform(MockMvcRequestBuilders.put("/travelers/{userId}/favorites/{tripId}", -1, -1)
 				.header("Authorization", "Bearer mockJwtToken"))
 				.andDo(print())
 				.andExpect(status().isOk());
 
-		mockMvc.perform(MockMvcRequestBuilders.delete("/users/{userId}/favorites/{tripId}", -1, -1)
+		mockMvc.perform(MockMvcRequestBuilders.delete("/travelers/{userId}/favorites/{tripId}", -1, -1)
 				.header("Authorization", "Bearer mockJwtToken"))
 				.andDo(print())
 				.andExpect(status().isOk());
@@ -268,7 +268,7 @@ class BackendSoloTravelApiApplicationTests {
 
 	@Test
 	void removeInexistentTripToUserFavouritesTrips() throws Exception {
-		mockMvc.perform(MockMvcRequestBuilders.delete("/users/{userId}/favorites/{tripId}", -1, 100)
+		mockMvc.perform(MockMvcRequestBuilders.delete("/travelers/{userId}/favorites/{tripId}", -1, 100)
 				.header("Authorization", "Bearer mockJwtToken"))
 				.andDo(print())
 				.andExpect(status().is(404))
@@ -278,7 +278,7 @@ class BackendSoloTravelApiApplicationTests {
 
 	@Test
 	void removeTripToInexistentUserFavouritesTrips() throws Exception {
-		mockMvc.perform(MockMvcRequestBuilders.delete("/users/{userId}/favorites/{tripId}", 100, 1)
+		mockMvc.perform(MockMvcRequestBuilders.delete("/travelers/{userId}/favorites/{tripId}", 100, 1)
 				.header("Authorization", "Bearer mockJwtToken"))
 				.andDo(print())
 				.andExpect(status().is(404))
@@ -288,10 +288,10 @@ class BackendSoloTravelApiApplicationTests {
 
 	@Test
 	void getAllFavouritesTripsFromAUser() throws Exception {
-		mockMvc.perform(MockMvcRequestBuilders.put("/users/{userId}/favorites/{tripId}", -1, -1)
+		mockMvc.perform(MockMvcRequestBuilders.put("/travelers/{userId}/favorites/{tripId}", -1, -1)
 				.header("Authorization", "Bearer mockJwtToken"));
 
-		mockMvc.perform(MockMvcRequestBuilders.get("/users/{userId}/favorites", -1)
+		mockMvc.perform(MockMvcRequestBuilders.get("/travelers/{userId}/favorites", -1)
 				.header("Authorization", "Bearer mockJwtToken"))
 				.andDo(print())
 				.andExpect(status().isOk())
@@ -303,7 +303,7 @@ class BackendSoloTravelApiApplicationTests {
 	@Test
 	void getAllFavouritesTripsFromAnInexistentUser() throws Exception {
 
-		mockMvc.perform(MockMvcRequestBuilders.get("/users/{userId}/favorites", 100)
+		mockMvc.perform(MockMvcRequestBuilders.get("/travelers/{userId}/favorites", 100)
 				.header("Authorization", "Bearer mockJwtToken"))
 				.andDo(print())
 				.andExpect(status().is(404))
