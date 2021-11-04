@@ -138,7 +138,7 @@ class BackendSoloTravelApiApplicationTests {
 
 		String token = getAgencyToken();
 
-		mockMvc.perform(MockMvcRequestBuilders.get("/agency/{agencyId}/trips", -2)
+		mockMvc.perform(MockMvcRequestBuilders.get("/agencies/{agencyId}/trips", -2)
 				.header("Authorization", token))
 				.andDo(print())
 				.andExpect(status().isOk())
@@ -151,7 +151,7 @@ class BackendSoloTravelApiApplicationTests {
 
 		String token = getAgencyToken();
 
-		mockMvc.perform(MockMvcRequestBuilders.post("/agency/{agencyId}/new", -2)
+		mockMvc.perform(MockMvcRequestBuilders.post("/agencies/{agencyId}/new", -2)
 				.header("Authorization", token)
 				.contentType(MediaType.APPLICATION_JSON)
 				.content(createTripDtoJSON))
@@ -164,7 +164,7 @@ class BackendSoloTravelApiApplicationTests {
 	void updateTrip() throws Exception {
 		String token = getAgencyToken();
 
-		mockMvc.perform(MockMvcRequestBuilders.post("/agency/{agencyId}/new", -2)
+		mockMvc.perform(MockMvcRequestBuilders.post("/agencies/{agencyId}/new", -2)
 				.header("Authorization", token)
 				.contentType(MediaType.APPLICATION_JSON)
 				.content(createTripDtoJSON))
@@ -174,7 +174,7 @@ class BackendSoloTravelApiApplicationTests {
 		createTripDto.setDescription("description2");
 		createTripDtoJSON = writer.writeValueAsString(createTripDto);
 
-		mockMvc.perform(MockMvcRequestBuilders.put("/agency/{agencyId}/edition/{tripId}",-2, 1)
+		mockMvc.perform(MockMvcRequestBuilders.put("/agencies/{agencyId}/edition/{tripId}",-2, 1)
 				.header("Authorization", token)
 				.contentType(MediaType.APPLICATION_JSON)
 				.content(createTripDtoJSON))
@@ -186,7 +186,7 @@ class BackendSoloTravelApiApplicationTests {
 	void updateInexistentTrip() throws Exception {
 		String token = getAgencyToken();
 
-		mockMvc.perform(MockMvcRequestBuilders.put("/agency/{agencyId}/edition/{tripId}",-2, 1)
+		mockMvc.perform(MockMvcRequestBuilders.put("/agencies/{agencyId}/edition/{tripId}",-2, 1)
 				.header("Authorization", token)
 				.contentType(MediaType.APPLICATION_JSON)
 				.content(createTripDtoJSON))
@@ -199,14 +199,14 @@ class BackendSoloTravelApiApplicationTests {
 	void deleteTrip() throws Exception{
 		String token = getAgencyToken();
 
-		mockMvc.perform(MockMvcRequestBuilders.post("/agency/{agencyId}/new", -2)
+		mockMvc.perform(MockMvcRequestBuilders.post("/agencies/{agencyId}/new", -2)
 				.header("Authorization", token)
 				.contentType(MediaType.APPLICATION_JSON)
 				.content(createTripDtoJSON))
 				.andDo(print())
 				.andExpect(status().isOk());
 
-		mockMvc.perform(MockMvcRequestBuilders.delete("/agency/{agencyId}/deletion/{tripId}",-2, 1)
+		mockMvc.perform(MockMvcRequestBuilders.delete("/agencies/{agencyId}/deletion/{tripId}",-2, 1)
 				.header("Authorization", token))
 				.andDo(print())
 				.andExpect(status().isOk());
@@ -216,7 +216,7 @@ class BackendSoloTravelApiApplicationTests {
 	void deleteInexistentTrip() throws Exception{
 		String token = getAgencyToken();
 
-		mockMvc.perform(MockMvcRequestBuilders.delete("/agency/{agencyId}/deletion/{tripId}",-2, 1)
+		mockMvc.perform(MockMvcRequestBuilders.delete("/agencies/{agencyId}/deletion/{tripId}",-2, 1)
 				.header("Authorization", token))
 				.andDo(print())
 				.andExpect(status().isNotFound())
