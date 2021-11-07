@@ -3,7 +3,7 @@ package ar.edu.unq.solotravel.backend.api.controllers;
 import ar.edu.unq.solotravel.backend.api.exceptions.NoSuchElementException;
 import ar.edu.unq.solotravel.backend.api.security.ValidateGoogleJwt;
 import ar.edu.unq.solotravel.backend.api.services.TripService;
-import ar.edu.unq.solotravel.backend.api.services.UserService;
+import ar.edu.unq.solotravel.backend.api.services.TravelerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.*;
 public class TravelerController {
 
     @Autowired
-    private UserService userService;
+    private TravelerService travelerService;
 
     @Autowired
     private TripService tripService;
@@ -24,7 +24,7 @@ public class TravelerController {
     public ResponseEntity getUserFavorites(
             @RequestHeader("Authorization") String googleToken,
             @PathVariable Integer userId) {
-        return ResponseEntity.ok().body(userService.getUserFavorites(userId));
+        return ResponseEntity.ok().body(travelerService.getUserFavorites(userId));
     }
 
     @ValidateGoogleJwt
@@ -33,7 +33,7 @@ public class TravelerController {
             @RequestHeader("Authorization") String googleToken,
             @PathVariable Integer userId,
             @PathVariable Integer tripId) {
-        userService.addTripToUserFavorites(userId, tripId);
+        travelerService.addTripToUserFavorites(userId, tripId);
         return ResponseEntity.ok().build();
     }
 
@@ -43,7 +43,7 @@ public class TravelerController {
             @RequestHeader("Authorization") String googleToken,
             @PathVariable Integer userId,
             @PathVariable Integer tripId) {
-        userService.removeTripFromUserFavorites(userId, tripId);
+        travelerService.removeTripFromUserFavorites(userId, tripId);
         return ResponseEntity.ok().build();
     }
 
