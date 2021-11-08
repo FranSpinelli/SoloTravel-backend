@@ -17,14 +17,12 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
-public class UserService {
+public class TravelerService {
 
     @Autowired
     private TravelerRepository travelerRepository;
     @Autowired
     private TripRepository tripRepository;
-    @Autowired
-    private TravelAgencyRepository travelAgencyRepository;
     @Autowired
     private ModelMapper modelMapper;
 
@@ -53,14 +51,5 @@ public class UserService {
         Trip tripWithId = tripRepository.findById(tripId).orElseThrow(() -> new NoSuchElementException("No Trip with Id: " + tripId));
         userWithId.removeFavorite(tripWithId);
         travelerRepository.save(userWithId);
-    }
-
-    public TripListResponseDto getAgencyTrips(Integer agencyId) {
-
-        TravelAgency agencyWithId = travelAgencyRepository.findById(agencyId).orElseThrow(() -> new NoSuchElementException("No Agency with Id: " + agencyId));
-
-        List<TripDto> tripsDtoList = agencyWithId.getTrips().stream().map(trip -> modelMapper.map(trip, TripDto.class)).collect(Collectors.toList());
-
-        return new TripListResponseDto(tripsDtoList);
     }
 }
