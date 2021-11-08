@@ -61,7 +61,7 @@ public class TripService {
 
     public void updateTrip(Integer agencyId, Integer tripId, UpdateTripDto updateTripDto) {
         TravelAgency agencyWithId = travelAgencyRepository.findById(agencyId).orElseThrow(() -> new NoSuchElementException("No Agency with Id: " + agencyId));
-        if (agencyWithId.getTrips().stream().anyMatch(trip -> trip.getId().equals(tripId)) || !tripId.equals(updateTripDto.getId())){
+        if (agencyWithId.getTrips().stream().anyMatch(trip -> trip.getId().equals(tripId)) && tripId.equals(updateTripDto.getId())){
             Trip tripWithId = tripRepository.findById(tripId).orElseThrow(() -> new NoSuchElementException("No Trip with Id: " + tripId));
             tripWithId.setName(updateTripDto.getName());
             tripWithId.setDestination(updateTripDto.getDestination());

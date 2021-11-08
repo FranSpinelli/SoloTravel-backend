@@ -1,9 +1,6 @@
 package ar.edu.unq.solotravel.backend.api;
 
-import ar.edu.unq.solotravel.backend.api.dtos.CreateTripDto;
-import ar.edu.unq.solotravel.backend.api.dtos.TokenResponseDto;
-import ar.edu.unq.solotravel.backend.api.dtos.TravelAgencyLoginDto;
-import ar.edu.unq.solotravel.backend.api.dtos.TravelAgencyRegisterDto;
+import ar.edu.unq.solotravel.backend.api.dtos.*;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
@@ -37,8 +34,10 @@ class BackendSoloTravelApiApplicationTests {
 
 	private ObjectMapper writer;
 	private String createTripDtoJSON;
+	private String updateTripDtoJSON;
 	private String agencyLoginDtoJSON;
 	private CreateTripDto createTripDto;
+	private UpdateTripDto updateTripDto;
 
 	@BeforeEach
 	void setUp() throws JsonProcessingException {
@@ -50,6 +49,9 @@ class BackendSoloTravelApiApplicationTests {
 		LocalDate tripDtoEndDate = LocalDate.of(2021,10,11);
 		createTripDto = new CreateTripDto("trip", "destination", "image", "description", 200.0, tripDtoStartDate, tripDtoEndDate);
 		createTripDtoJSON = writer.writeValueAsString(createTripDto);
+
+		updateTripDto = new UpdateTripDto(1, "trip", "destination", "image", "description", 200.0, tripDtoStartDate, tripDtoEndDate);
+		updateTripDtoJSON = writer.writeValueAsString(updateTripDto);
 
 		TravelAgencyLoginDto agencyLoginDto = new TravelAgencyLoginDto("guestTravelAgent1@gmail.com", "guest");
 		agencyLoginDtoJSON = writer.writeValueAsString(agencyLoginDto);
@@ -174,13 +176,13 @@ class BackendSoloTravelApiApplicationTests {
 				.andDo(print())
 				.andExpect(status().isOk());
 
-		createTripDto.setDescription("description2");
-		createTripDtoJSON = writer.writeValueAsString(createTripDto);
+		updateTripDto.setDescription("description2");
+		updateTripDtoJSON = writer.writeValueAsString(updateTripDto);
 
 		mockMvc.perform(MockMvcRequestBuilders.put("/agencies/{agencyId}/edition/{tripId}",-2, 1)
 				.header("Authorization", token)
 				.contentType(MediaType.APPLICATION_JSON)
-				.content(createTripDtoJSON))
+				.content(updateTripDtoJSON))
 				.andDo(print())
 				.andExpect(status().isOk());
 	}
@@ -195,7 +197,7 @@ class BackendSoloTravelApiApplicationTests {
 				.content(createTripDtoJSON))
 				.andDo(print())
 				.andExpect(status().isNotFound())
-				.andExpect(MockMvcResultMatchers.jsonPath("$.message").value("No Trip with Id: 1"));
+				.andExpect(MockMvcResultMatchers.jsonPath("$.message").value("The Agency does not contain a trip with Id: 1"));
 	}
 
 	@Test
