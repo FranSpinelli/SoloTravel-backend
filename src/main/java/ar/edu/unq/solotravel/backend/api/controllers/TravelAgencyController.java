@@ -2,6 +2,7 @@ package ar.edu.unq.solotravel.backend.api.controllers;
 
 import ar.edu.unq.solotravel.backend.api.dtos.CreateTripDto;
 import ar.edu.unq.solotravel.backend.api.dtos.UpdateTripDto;
+import ar.edu.unq.solotravel.backend.api.security.ValidateInternalJwt;
 import ar.edu.unq.solotravel.backend.api.services.TravelAgencyService;
 import ar.edu.unq.solotravel.backend.api.services.TripService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +21,7 @@ public class TravelAgencyController {
     @Autowired
     private TravelAgencyService travelAgencyService;
 
+    @ValidateInternalJwt
     @PostMapping("/{agencyId}/new")
     public ResponseEntity createTrip(
             @RequestHeader("Authorization") String token,
@@ -29,6 +31,7 @@ public class TravelAgencyController {
         return ResponseEntity.ok(HttpStatus.CREATED);
     }
 
+    @ValidateInternalJwt
     @PutMapping("/{agencyId}/edition/{tripId}")
     public ResponseEntity updateTrip(
             @RequestHeader("Authorization") String token,
@@ -39,6 +42,7 @@ public class TravelAgencyController {
         return ResponseEntity.ok(HttpStatus.OK);
     }
 
+    @ValidateInternalJwt
     @DeleteMapping("/{agencyId}/deletion/{tripId}")
     public ResponseEntity deleteTrip(
             @RequestHeader("Authorization") String token,
@@ -48,6 +52,7 @@ public class TravelAgencyController {
         return ResponseEntity.ok(HttpStatus.OK);
     }
 
+    @ValidateInternalJwt
     @GetMapping("/{agencyId}/trips")
     public ResponseEntity getAgencyTrips(
             @RequestHeader("Authorization") String token,

@@ -80,8 +80,10 @@ class BackendSoloTravelApiApplicationTests {
 
 	@Test
 	void getTripById() throws Exception {
+
+		String token = getAgencyToken();
 		mockMvc.perform(MockMvcRequestBuilders.get("/trips/{tripId}", -1)
-				.header("Authorization", "Bearer mockJwtToken"))
+				.header("Authorization", token))
 				.andDo(print())
 				.andExpect(status().isOk())
 				.andExpect(content().contentType("application/json"))
@@ -90,8 +92,10 @@ class BackendSoloTravelApiApplicationTests {
 
 	@Test
 	void getTripByIdOfInexistentId() throws Exception {
+
+		String token = getAgencyToken();
 		mockMvc.perform(MockMvcRequestBuilders.get("/trips/{tripId}", 200)
-				.header("Authorization", "Bearer mockJwtToken"))
+				.header("Authorization", token))
 				.andDo(print())
 				.andExpect(status().isNotFound())
 				.andExpect(content().contentType("application/json"))
@@ -158,7 +162,6 @@ class BackendSoloTravelApiApplicationTests {
 				.andDo(print())
 				.andExpect(status().isOk());
 	}
-
 
 	@Test
 	void updateTrip() throws Exception {
@@ -338,6 +341,6 @@ class BackendSoloTravelApiApplicationTests {
 				.andExpect(status().isOk())
 				.andReturn().getResponse().getContentAsString();
 		TokenResponseDto tokenResponse = writer.readValue(responseJson, TokenResponseDto.class);
-		return tokenResponse.getToken();
+		return "Bearer " + tokenResponse.getToken();
 	}
 }

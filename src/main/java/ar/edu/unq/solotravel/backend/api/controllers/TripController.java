@@ -1,6 +1,7 @@
 package ar.edu.unq.solotravel.backend.api.controllers;
 
 import ar.edu.unq.solotravel.backend.api.exceptions.NoSuchElementException;
+import ar.edu.unq.solotravel.backend.api.security.ValidateInternalJwt;
 import ar.edu.unq.solotravel.backend.api.services.TripService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -19,6 +20,7 @@ public class TripController {
         return ResponseEntity.ok().body(tripService.getAllTrips(name));
     }
 
+    @ValidateInternalJwt
     @GetMapping("/{tripId}")
     public ResponseEntity getTripById(
             @RequestHeader("Authorization") String token,

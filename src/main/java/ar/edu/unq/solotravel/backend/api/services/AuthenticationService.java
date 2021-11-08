@@ -42,7 +42,6 @@ public class AuthenticationService {
     }
 
     public TokenResponseDto authenticateTravelAgency(TravelAgencyLoginDto travelAgencyLoginDto) {
-       /*ToDo: add integration test*/
         TravelAgency travelAgencyWithEmail = travelAgencyRepository.findByEmail(travelAgencyLoginDto.getEmail())
                .orElseThrow(() -> new LogInException("Incorrect mail or password"));
 
