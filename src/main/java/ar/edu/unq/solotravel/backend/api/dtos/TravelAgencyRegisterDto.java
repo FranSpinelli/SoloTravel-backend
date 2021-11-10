@@ -64,10 +64,10 @@ public class TravelAgencyRegisterDto {
     @NotEmpty(message = "manager surname field can't be empty in the body json")
     @Length(min = 3, max = 20, message = "manager first name field should has between 3 and 20 characters length")
     private String managerSurname;
-    @NotNull(message = "manager dni field can't be null in the body json")
-    @Min(value = 11111111, message = "Please provide a valid dni number")
-    @Max(value = 99999999, message = "Please provide a valid dni number")
-    private Integer managerDni;
+    @NotNull(message = "manager DNI field can't be null in the body json")
+    @NotEmpty(message = "manager DNI field can't be empty in the body json")
+    @Length(max = 8, message = "manager DNI field should has between 3 and 20 characters length")
+    private String managerDni;
     @NotNull(message = "manager cuit field can't be null in the body json")
     @Min(value = 11111111111L, message = "Please provide a valid cuit number")
     @Max(value = 99999999999L, message = "Please provide a valid cuit number")
