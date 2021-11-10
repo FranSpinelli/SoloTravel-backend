@@ -10,6 +10,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
+
 @CrossOrigin
 @RestController
 @RequestMapping("/agencies")
@@ -26,7 +28,7 @@ public class TravelAgencyController {
     public ResponseEntity createTrip(
             @RequestHeader("Authorization") String token,
             @PathVariable Integer agencyId,
-            @RequestBody CreateTripDto createTripDto) {
+            @Valid @RequestBody CreateTripDto createTripDto) {
         tripService.createTrip(agencyId, createTripDto);
         return ResponseEntity.ok(HttpStatus.CREATED);
     }
@@ -37,7 +39,7 @@ public class TravelAgencyController {
             @RequestHeader("Authorization") String token,
             @PathVariable Integer agencyId,
             @PathVariable Integer tripId,
-            @RequestBody UpdateTripDto updateTripDto) {
+            @Valid @RequestBody UpdateTripDto updateTripDto) {
         tripService.updateTrip(agencyId, tripId, updateTripDto);
         return ResponseEntity.ok(HttpStatus.OK);
     }

@@ -3,6 +3,7 @@ package ar.edu.unq.solotravel.backend.api;
 import ar.edu.unq.solotravel.backend.api.dtos.GenericErrorResponseDto;
 import ar.edu.unq.solotravel.backend.api.dtos.ValidationErrorResponseDTO;
 import ar.edu.unq.solotravel.backend.api.exceptions.*;
+import org.apache.tomcat.util.http.fileupload.impl.FileSizeLimitExceededException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.FieldError;
@@ -45,6 +46,16 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(MissingRequestHeaderException.class)
     public ResponseEntity handleMissingRequestHeaderException(MissingRequestHeaderException missingRequestHeaderException){
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new GenericErrorResponseDto(missingRequestHeaderException.getMessage()));
+    }
+
+    @ExceptionHandler(InvalidImageException.class)
+    public ResponseEntity handleInvalidImageException(InvalidImageException invalidImageException){
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new GenericErrorResponseDto(invalidImageException.getMessage()));
+    }
+
+    @ExceptionHandler(FileSizeLimitExceededException.class)
+    public ResponseEntity handleFileSizeLimitExceededException(FileSizeLimitExceededException fileSizeLimitExceededException){
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new GenericErrorResponseDto(fileSizeLimitExceededException.getMessage()));
     }
 
     @ExceptionHandler(MethodArgumentNotValidException.class)

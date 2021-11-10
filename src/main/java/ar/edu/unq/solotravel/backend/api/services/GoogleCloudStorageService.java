@@ -1,11 +1,10 @@
 package ar.edu.unq.solotravel.backend.api.services;
 
+import ar.edu.unq.solotravel.backend.api.exceptions.InvalidImageException;
 import com.google.cloud.storage.*;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
-
-import java.io.IOException;
 
 @Service
 public class GoogleCloudStorageService {
@@ -22,8 +21,8 @@ public class GoogleCloudStorageService {
 
             uploadedBlob = storage.create(blobInfo, file.getBytes());
         }
-        catch (IOException exception) {
-            //TODO: Launch custom exception and add it to global handler exception
+        catch (Exception ex) {
+            throw new InvalidImageException();
         }
         return uploadedBlob;
     }
