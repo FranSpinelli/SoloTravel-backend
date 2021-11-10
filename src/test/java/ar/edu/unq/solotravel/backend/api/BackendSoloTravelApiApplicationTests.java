@@ -45,8 +45,8 @@ class BackendSoloTravelApiApplicationTests {
 		writer.registerModule(new JavaTimeModule());
 		writer.configure(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS, false);
 
-		LocalDate tripDtoStartDate = LocalDate.of(2021,10,10);
-		LocalDate tripDtoEndDate = LocalDate.of(2021,10,11);
+		LocalDate tripDtoStartDate = LocalDate.of(2021,12,10);
+		LocalDate tripDtoEndDate = LocalDate.of(2021,12,11);
 		createTripDto = new CreateTripDto("trip", "destination", "image", "description", 200.0, tripDtoStartDate, tripDtoEndDate);
 		createTripDtoJSON = writer.writeValueAsString(createTripDto);
 
@@ -194,7 +194,7 @@ class BackendSoloTravelApiApplicationTests {
 		mockMvc.perform(MockMvcRequestBuilders.put("/agencies/{agencyId}/edition/{tripId}",-2, 1)
 				.header("Authorization", token)
 				.contentType(MediaType.APPLICATION_JSON)
-				.content(createTripDtoJSON))
+				.content(updateTripDtoJSON))
 				.andDo(print())
 				.andExpect(status().isNotFound())
 				.andExpect(MockMvcResultMatchers.jsonPath("$.message").value("The Agency does not contain a trip with Id: 1"));
