@@ -82,6 +82,17 @@ public class TripService {
         return modelMapper.map(tripWithId, TripDetailsDto.class);
     }
 
+    public AgencyTripDetailsDto getTripDetails(Integer tripId) throws NoSuchElementException {
+        TravelAgency agency = travelAgencyRepository.findByTripsId(tripId).orElseThrow(() -> new NoSuchElementException("No trip with id: " + tripId));
+        Trip trip = agency.getTrips().stream().filter(t -> t.getId().equals(tripId)).findFirst().get();
+
+        AgencyTripDetailsDto result = modelMapper.map(trip, AgencyTripDetailsDto.class);
+        result.setAgencyId(agency.getId());
+        result.setAgencyName(agency.getName());
+
+        return result;
+    }
+
     public void deleteTrip(Integer agencyId, Integer tripId) {
 
         TravelAgency agencyWithId = travelAgencyRepository.findById(agencyId).orElseThrow(() -> new NoSuchElementException("No Agency with Id: " + agencyId));
