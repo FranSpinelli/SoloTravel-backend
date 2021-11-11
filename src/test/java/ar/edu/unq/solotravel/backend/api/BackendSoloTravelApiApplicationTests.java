@@ -323,7 +323,7 @@ class BackendSoloTravelApiApplicationTests {
 
 		TravelAgencyRegisterDto travelAgencyRegisterDto = new TravelAgencyRegisterDto("TravelAgencyName", "mail@gmail.com", "password",
 				"fiscalName", 20222222222L, "province", "city", "street", 123,
-				"firstName", "surname", 11111111, 20222222222L);
+				"firstName", "surname", "11111111", 20222222222L);
 		String travelAgencyRegisterDtoJSON = writer.writeValueAsString(travelAgencyRegisterDto);
 
 		mockMvc.perform(MockMvcRequestBuilders.post("/register/travelAgency")
