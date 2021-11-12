@@ -67,7 +67,7 @@ INSERT INTO trips (id, name, destination, image, description, price, start_date,
     );
 
 INSERT INTO managers (id, first_Name, surname, dni, cuit) VALUES
-    (-1, 'Nicolas', 'Ruiz', 11111111, 20111111115);
+    (-1, 'Nicolas', 'Ruiz', '11111111', 20111111115);
 
 INSERT INTO locations (id, province, city, street, number) VALUES
     (-1, 'Buenos Aires', 'Quilmes', 'Sarmiento', 111);

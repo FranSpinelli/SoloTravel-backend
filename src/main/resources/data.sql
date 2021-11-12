@@ -77,9 +77,9 @@ INSERT INTO locations (id, province, city, street, number) VALUES
     (-3, "Buenos Aires", "Quilmes", "Sarmiento", 333);
 
 INSERT INTO managers (id, first_Name, surname, dni, cuit) VALUES
-    (-1, "Nicolas", "Ruiz", 11111111, 20111111115),
-    (-2, "Nicolas", "Ruiz", 22222222, 20222222225),
-    (-3, "Nicolas", "Ruiz", 33333333, 20333333335);
+    (-1, "Nicolas", "Ruiz", '11111111', 20111111115),
+    (-2, "Nicolas", "Ruiz", '22222222', 20222222225),
+    (-3, "Nicolas", "Ruiz", '33333333', 20333333335);
 
 INSERT INTO users (id, email, name) VALUES
     (-1, 'guestTravelAgent1@gmail.com', 'mockGuestTravelAgency1'),
