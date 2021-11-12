@@ -27,4 +27,9 @@ public class TripController {
             @PathVariable Integer tripId) throws NoSuchElementException {
         return ResponseEntity.ok().body(tripService.getTripById(tripId));
     }
+
+    @GetMapping("/{tripId}/details")
+    public ResponseEntity getTripDetails(@PathVariable Integer tripId) {
+        return ResponseEntity.ok().body(tripService.getTripDetails(tripId));
+    }
 }
