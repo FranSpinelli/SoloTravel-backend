@@ -21,6 +21,6 @@ public class Manager {
 
     private String firstName;
     private String surname;
-    private Integer dni;
+    private String dni;
     private Long cuit;
 }
