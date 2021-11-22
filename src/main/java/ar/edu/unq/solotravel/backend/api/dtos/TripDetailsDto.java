@@ -18,5 +18,6 @@ public class TripDetailsDto {
     private Double price;
     private LocalDate startDate;
     private LocalDate endDate;
+    private Integer totalSlots;
     private String category;
 }

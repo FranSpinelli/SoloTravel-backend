@@ -1,5 +1,6 @@
 package ar.edu.unq.solotravel.backend.api;
 
+import ar.edu.unq.solotravel.backend.api.dtos.CreateTripDto;
 import ar.edu.unq.solotravel.backend.api.dtos.TripDto;
 import ar.edu.unq.solotravel.backend.api.models.Trip;
 import org.modelmapper.ModelMapper;
@@ -25,6 +26,10 @@ public class BackendSoloTravelApiApplication {
 
 		modelMapper.typeMap(Trip.class, TripDto.class).addMappings(mapper -> {
 			mapper.map(Trip::getDuration, TripDto::setDuration);
+		});
+
+		modelMapper.typeMap(CreateTripDto.class, Trip.class).addMappings(mapper -> {
+			mapper.map(CreateTripDto::getTotalSlots, Trip::setAvailableSlots);
 		});
 
 		return modelMapper;

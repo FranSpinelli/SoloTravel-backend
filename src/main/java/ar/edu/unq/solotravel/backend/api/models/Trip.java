@@ -29,6 +29,8 @@ public class Trip {
     private LocalDate endDate;
     @Enumerated(EnumType.STRING)
     private TripCategory category;
+    private Integer TotalSlots;
+    private Integer AvailableSlots;
 
     public Integer getDuration(){
         return Math.toIntExact(ChronoUnit.DAYS.between(startDate, endDate));

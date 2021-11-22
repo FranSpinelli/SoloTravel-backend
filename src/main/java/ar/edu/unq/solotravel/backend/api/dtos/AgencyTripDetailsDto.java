@@ -21,6 +21,7 @@ public class AgencyTripDetailsDto {
     private LocalDate startDate;
     private LocalDate endDate;
     private String category;
+    private Integer availableSlots;
     private Integer agencyId;
     private String agencyName;
 }

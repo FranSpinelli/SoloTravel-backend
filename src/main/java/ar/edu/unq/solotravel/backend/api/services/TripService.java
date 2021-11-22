@@ -70,6 +70,8 @@ public class TripService {
             tripWithId.setPrice(updateTripDto.getPrice());
             tripWithId.setStartDate(updateTripDto.getStartDate());
             tripWithId.setEndDate(updateTripDto.getEndDate());
+            tripWithId.setTotalSlots(updateTripDto.getTotalSlots());
+            tripWithId.setAvailableSlots(updateTripDto.getTotalSlots());
             tripRepository.save(tripWithId);
         }else{
             throw new NoSuchElementException("The Agency does not contain a trip with Id: " + tripId);

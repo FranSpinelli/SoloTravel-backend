@@ -37,4 +37,8 @@ public class UpdateTripDto {
     @NotNull(message = "date field can't be null")
     @FutureOrPresent(message = "date can't be a past date")
     private LocalDate endDate;
+    @NotNull(message = "slots field can't be null")
+    @Min(value = 1, message = "Please provide a valid total slots number")
+    @Max(value = 99, message = "Please provide a valid total slots number")
+    private Integer totalSlots;
 }
