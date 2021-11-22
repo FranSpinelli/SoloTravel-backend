@@ -47,10 +47,10 @@ class BackendSoloTravelApiApplicationTests {
 
 		LocalDate tripDtoStartDate = LocalDate.of(2021,12,10);
 		LocalDate tripDtoEndDate = LocalDate.of(2021,12,11);
-		createTripDto = new CreateTripDto("trip", "destination", "image", "description", 200.0, tripDtoStartDate, tripDtoEndDate);
+		createTripDto = new CreateTripDto("trip", "destination", "image", "description", 200.0, tripDtoStartDate, tripDtoEndDate, 10);
 		createTripDtoJSON = writer.writeValueAsString(createTripDto);
 
-		updateTripDto = new UpdateTripDto(1, "trip", "destination", "image", "description", 200.0, tripDtoStartDate, tripDtoEndDate);
+		updateTripDto = new UpdateTripDto(1, "trip", "destination", "image", "description", 200.0, tripDtoStartDate, tripDtoEndDate, 10);
 		updateTripDtoJSON = writer.writeValueAsString(updateTripDto);
 
 		TravelAgencyLoginDto agencyLoginDto = new TravelAgencyLoginDto("guestTravelAgent1@gmail.com", "guest");
