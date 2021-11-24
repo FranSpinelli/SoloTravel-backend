@@ -72,28 +72,28 @@ INSERT INTO trips (id, name, destination, image, description, price, start_date,
 --    ('guestGoogleId', 1)
 
 INSERT INTO locations (id, province, city, street, number) VALUES
-    (-1, "Buenos Aires", "Quilmes", "Sarmiento", 111),
-    (-2, "Buenos Aires", "Quilmes", "Sarmiento", 222),
-    (-3, "Buenos Aires", "Quilmes", "Sarmiento", 333);
+    (-1, "Buenos Aires", "Berazategui", "Avenida Mitre", 1233),
+    (-2, "Buenos Aires", "Quilmes", "Avenida Mitre", 655),
+    (-3, "Buenos Aires", "Quilmes", "Alsina", 182);
 
 INSERT INTO managers (id, first_Name, surname, dni, cuit) VALUES
-    (-1, "Nicolas", "Ruiz", '11111111', 20111111115),
-    (-2, "Nicolas", "Ruiz", '22222222', 20222222225),
-    (-3, "Nicolas", "Ruiz", '33333333', 20333333335);
+    (-1, "Francisco", "Svrznjak", '90976546', 20909765465),
+    (-2, "Nicolas", "Ruiz", '92366777', 20923667775),
+    (-3, "Carina", "Spinelli", '55385024', 20553850245);
 
 INSERT INTO users (id, email, name) VALUES
-    (-1, 'guestTravelAgent1@gmail.com', 'mockGuestTravelAgency1'),
-    (-2, 'guestTravelAgent2@gmail.com', 'mockGuestTravelAgency2'),
-    (-3, 'guestTravelAgent3@gmail.com', 'mockGuestTravelAgency3'),
+    (-1, 'franciscospinelli98@gmail.com', 'Carlos Sansot'),
+    (-2, 'nicoruiz182@gmail.com', 'Macondo Viajes'),
+    (-3, 'nico-ruiz-011@hotmail.com', 'Equitur'),
     (-4, 'guestTraveler@gmail.com', 'mockGuestTraveler1');
 
 INSERT INTO travelers (google_id, picture, id) VALUES
-    ('mockGuestGoogleId', 'mockGuestPicture', -4);
+    ('Juana Murillo', 'juanaMurilloMockPicture', -4);
 
 INSERT INTO travel_agencies (password, id, cuit, fiscal_name, location_id, manager_id) VALUES
-    ('guest', -1, 11111111111, "MockTravelAgency1", -1, -1),
-    ('guest', -2, 22222222222, "MockTravelAgency2", -2, -2),
-    ('guest', -3, 33333333333, "MockTravelAgency3", -3, -3);
+    ('guest', -1, 20315059745, "Carlos Sansot S.A", -1, -1),
+    ('guest', -2, 20376265625, "Macondo Viajes S.A", -2, -2),
+    ('guest', -3, 20409737135, "Equitur S.R.L", -3, -3);
 
 INSERT INTO travel_agencies_trips (travel_agency_id, trips_id) VALUES
     (-1, -1),
