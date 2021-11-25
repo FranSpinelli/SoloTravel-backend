@@ -9,7 +9,7 @@ INSERT INTO trips (id, name, destination, image, description, price, start_date,
         'San Carlos de Bariloche, Río Negro',
         'bariloche.webp',
         'Sentí la magia de cada rincón de Bariloche. Navegá y descubrí la belleza del único bosque de arrayanes del mundo. Relajate en el hotel frente al lago y encontrá el plus de desconexión que necesitás para tu escapada.\nBariloche es un destino que atrapa. Sus montañas, lagos y arroyos se camuflan con el verde de la vegetación para crear postales maravillosas. Sus sabores maridan con una atmósfera de paz especial para desconectarse de la rutina y vivir de cerca la perfección de la naturaleza.\n¡Dejate tentar por el encanto de un lugar soñado y empezá a palpitar una escapada para desconectarte de verdad!',
-        44567, '2022-01-10', '2022-01-16', 'CATEGORY2', 15, 1
+        44567, '2021-01-10', '2021-01-16', 'CATEGORY2', 15, 1
     ),
     (-3, 'Salta: una aventura única',
         'Salta, Salta',

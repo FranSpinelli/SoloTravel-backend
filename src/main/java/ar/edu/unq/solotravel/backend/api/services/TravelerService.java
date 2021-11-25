@@ -13,6 +13,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -30,7 +31,10 @@ public class TravelerService {
 
         Traveler userWithId = travelerRepository.findById(userId).orElseThrow(() -> new NoSuchElementException("No User with Id: " + userId));
 
-        List<TripDto> tripsDtoList = userWithId.getFavorites().stream().map(trip -> modelMapper.map(trip, TripDto.class)).collect(Collectors.toList());
+        List<TripDto> tripsDtoList = userWithId.getFavorites().stream().map(trip -> modelMapper.map(trip, Trip.class))
+                .filter(trip -> trip.getStartDate().isAfter(LocalDate.now()))
+                .map(trip -> modelMapper.map(trip, TripDto.class)).collect(Collectors.toList());
+
         // TODO: Enhance the way of setting a trip as favorite (ideally using model mapper)
         tripsDtoList.forEach(tripDto -> tripDto.setIsFavorite(true));
 
