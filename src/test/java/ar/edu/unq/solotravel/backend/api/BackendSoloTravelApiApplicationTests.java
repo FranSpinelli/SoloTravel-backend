@@ -72,7 +72,7 @@ class BackendSoloTravelApiApplicationTests {
 	@Test
 	void getAllTripsPassingNameFilter() throws Exception {
 		mockMvc.perform(MockMvcRequestBuilders.get("/trips")
-				.param("name", "salta"))
+				.param("destination", "salta"))
 				.andDo(print())
 				.andExpect(status().isOk())
 				.andExpect(content().contentType("application/json"))
@@ -128,7 +128,7 @@ class BackendSoloTravelApiApplicationTests {
 	@Test
 	void getAllTripsPassingForGivenUserNameFilter() throws Exception {
 		mockMvc.perform(MockMvcRequestBuilders.get("/travelers/{userId}", -1)
-				.param("name", "salta")
+				.param("destination", "salta")
 				.header("Authorization", "Bearer mockJwtToken"))
 				.andDo(print())
 				.andExpect(status().isOk())
