@@ -24,9 +24,12 @@ public class TripController {
     public ResponseEntity getAllTrips(
             @RequestParam(required = false) String destination,
             @RequestParam(required = false) String date) {
-        LocalDate searchDate = date == null ? LocalDate.now() : LocalDate.parse(date.substring(0, 10));
-        if (searchDate.isBefore(LocalDate.now()))
+        LocalDate searchDate = date == null
+                ? LocalDate.now()
+                : LocalDate.parse(date.substring(0, 10));
+        if (searchDate.isBefore(LocalDate.now())) {
             searchDate = LocalDate.now();
+        }
         SearchTripParamsDto paramsDto = new SearchTripParamsDto(destination, searchDate);
         return ResponseEntity.ok().body(tripService.getAllTrips(paramsDto));
     }

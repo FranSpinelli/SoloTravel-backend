@@ -19,5 +19,6 @@ public class TripDto {
     private double price;
     private Integer duration;
     private Boolean isFavorite;
+    private int totalSlots;
     private int availableSlots;
 }
