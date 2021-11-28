@@ -3,6 +3,7 @@ package ar.edu.unq.solotravel.backend.api.controllers;
 import ar.edu.unq.solotravel.backend.api.dtos.SearchTripParamsDto;
 import ar.edu.unq.solotravel.backend.api.exceptions.NoSuchElementException;
 import ar.edu.unq.solotravel.backend.api.security.ValidateGoogleJwt;
+import ar.edu.unq.solotravel.backend.api.security.ValidateInternalJwt;
 import ar.edu.unq.solotravel.backend.api.services.TripService;
 import ar.edu.unq.solotravel.backend.api.services.TravelerService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -47,6 +48,15 @@ public class TravelerController {
             @PathVariable Integer userId,
             @PathVariable Integer tripId) {
         travelerService.removeTripFromUserFavorites(userId, tripId);
+        return ResponseEntity.ok().build();
+    }
+
+    //@ValidateGoogleJwt
+    @PutMapping("/{userId}/book/{tripId}")
+    public ResponseEntity bookTrip(@RequestHeader("Authorization") String token,
+                                   @PathVariable Integer userId,
+                                   @PathVariable Integer tripId) {
+        travelerService.bookTrip(userId, tripId);
         return ResponseEntity.ok().build();
     }
 

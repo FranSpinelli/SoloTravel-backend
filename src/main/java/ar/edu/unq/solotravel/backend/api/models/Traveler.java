@@ -17,6 +17,8 @@ public class Traveler extends User{
     private String picture;
     @OneToMany(fetch = FetchType.LAZY)
     private List<Trip> favorites;
+    @OneToMany(fetch = FetchType.LAZY)
+    private List<Trip> bookedTrips;
 
     public void addFavorite(Trip trip){
         if(!favorites.contains(trip)){
@@ -26,5 +28,19 @@ public class Traveler extends User{
 
     public void removeFavorite(Trip trip){
         favorites.remove(trip);
+    }
+
+    public void addBookedTrip(Trip trip){
+        if(!bookedTrips.contains(trip)){
+            bookedTrips.add(trip);
+        }
+    }
+
+    public void removeBookedTrip(Trip trip){
+        favorites.remove(trip);
+    }
+
+    public boolean hasBookedTrip(Trip trip) {
+        return bookedTrips.contains(trip);
     }
 }

@@ -2,7 +2,9 @@ package ar.edu.unq.solotravel.backend.api.services;
 
 import ar.edu.unq.solotravel.backend.api.dtos.TripDto;
 import ar.edu.unq.solotravel.backend.api.dtos.TripListResponseDto;
+import ar.edu.unq.solotravel.backend.api.exceptions.InvalidActionException;
 import ar.edu.unq.solotravel.backend.api.exceptions.NoSuchElementException;
+import ar.edu.unq.solotravel.backend.api.helpers.EmailSenderHelper;
 import ar.edu.unq.solotravel.backend.api.models.TravelAgency;
 import ar.edu.unq.solotravel.backend.api.models.Traveler;
 import ar.edu.unq.solotravel.backend.api.models.Trip;
@@ -25,7 +27,11 @@ public class TravelerService {
     @Autowired
     private TripRepository tripRepository;
     @Autowired
+    private TravelAgencyRepository travelAgencyRepository;
+    @Autowired
     private ModelMapper modelMapper;
+    @Autowired
+    private EmailSenderHelper emailSenderHelper;
 
     public TripListResponseDto getUserFavorites(Integer userId) {
 
@@ -55,5 +61,33 @@ public class TravelerService {
         Trip tripWithId = tripRepository.findById(tripId).orElseThrow(() -> new NoSuchElementException("No Trip with Id: " + tripId));
         userWithId.removeFavorite(tripWithId);
         travelerRepository.save(userWithId);
+    }
+
+    public void bookTrip(Integer userId, Integer tripId) {
+
+        Traveler userWithId = travelerRepository.findById(userId).orElseThrow(() -> new NoSuchElementException("No User with Id: " + userId));
+        Trip tripWithId = tripRepository.findById(tripId).orElseThrow(() -> new NoSuchElementException("No Trip with Id: " + tripId));
+        TravelAgency travelAgencyWithTrip = travelAgencyRepository.findByTripsId(tripId).orElseThrow(() -> new NoSuchElementException("No trip with id: " + tripId));;
+
+        String travelerEmailSubject = "SoloApp: reserva confirmada a \"" + tripWithId.getName() + "\"";
+        String travelerEmailBody = "Se ha confirmado su reserva para el viaje, un miembro de " + travelAgencyWithTrip.getName() + " se estará comunicando con usted para ultimar detalles.";
+
+        String travelAgencyEmailSubject = "SoloApp: se ha realizado una reserva en el viaje \"" + tripWithId.getName() + "\"";
+        String travelAgencyEmailBOdy = "El pasajero ya fue notificado de la reserva y esta esperando ser contactado por usted para ultimar detalles. \n mail de contacto: " + userWithId.getEmail();
+
+        if(! tripWithId.hasAvailableSlot()){
+            throw new InvalidActionException("Trip " + tripId + " hasn't got any available slot");
+        }else if (userWithId.hasBookedTrip(tripWithId)){
+            throw new InvalidActionException("User " + userId + " can't book more than one slot");
+        }else{
+            userWithId.addBookedTrip(tripWithId);
+            tripWithId.bookSlot();
+
+            emailSenderHelper.sendEmail(userWithId.getEmail(), travelerEmailSubject, travelerEmailBody);
+            emailSenderHelper.sendEmail(travelAgencyWithTrip.getEmail(), travelAgencyEmailSubject, travelAgencyEmailBOdy);
+
+            travelerRepository.save(userWithId);
+            tripRepository.save(tripWithId);
+        }
     }
 }

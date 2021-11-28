@@ -41,6 +41,8 @@ dependencies {
 	//GOOGLE CLOUD STORAGE CLIENT
 	implementation platform('com.google.cloud:libraries-bom:23.0.0')
 	implementation 'com.google.cloud:google-cloud-storage'
+	//MAIL SENDER
+	implementation group: 'org.springframework.boot', name: 'spring-boot-starter-mail', version: '2.5.4'
 }
 
 test {

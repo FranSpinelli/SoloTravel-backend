@@ -9,8 +9,6 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration;
 import org.springframework.context.annotation.Bean;
 
-import java.time.temporal.ChronoUnit;
-
 @SpringBootApplication(exclude={SecurityAutoConfiguration.class})
 public class BackendSoloTravelApiApplication {
 

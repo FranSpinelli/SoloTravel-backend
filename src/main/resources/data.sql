@@ -85,10 +85,10 @@ INSERT INTO users (id, email, name) VALUES
     (-1, 'franciscospinelli98@gmail.com', 'Carlos Sansot'),
     (-2, 'nicoruiz182@gmail.com', 'Macondo Viajes'),
     (-3, 'nico-ruiz-011@hotmail.com', 'Equitur'),
-    (-4, 'guestTraveler@gmail.com', 'mockGuestTraveler1');
+    (-4, 'francisco.spinelli@mercadolibre.com', 'Francisco Spinelli');
 
 INSERT INTO travelers (google_id, picture, id) VALUES
-    ('Juana Murillo', 'juanaMurilloMockPicture', -4);
+    ('mockGoogleId', 'juanaMurilloMockPicture', -4);
 
 INSERT INTO travel_agencies (password, id, cuit, fiscal_name, location_id, manager_id) VALUES
     ('guest', -1, 20315059745, "Carlos Sansot S.A", -1, -1),

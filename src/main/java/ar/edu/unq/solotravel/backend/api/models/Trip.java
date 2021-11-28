@@ -29,10 +29,16 @@ public class Trip {
     private LocalDate endDate;
     @Enumerated(EnumType.STRING)
     private TripCategory category;
-    private Integer TotalSlots;
-    private Integer AvailableSlots;
+    private Integer totalSlots;
+    private Integer availableSlots;
+
 
     public Integer getDuration(){
         return Math.toIntExact(ChronoUnit.DAYS.between(startDate, endDate));
     }
+
+    public boolean hasAvailableSlot() {return availableSlots > 0;}
+
+    public void bookSlot() {availableSlots--;}
+    public void freeSlot() {availableSlots++;}
 }

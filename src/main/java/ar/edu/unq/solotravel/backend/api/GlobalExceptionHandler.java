@@ -11,6 +11,7 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.MissingRequestHeaderException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.client.HttpClientErrorException;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -56,6 +57,11 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(FileSizeLimitExceededException.class)
     public ResponseEntity handleFileSizeLimitExceededException(FileSizeLimitExceededException fileSizeLimitExceededException){
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new GenericErrorResponseDto(fileSizeLimitExceededException.getMessage()));
+    }
+
+    @ExceptionHandler(InvalidActionException.class)
+    public ResponseEntity handleInvalidActionException(InvalidActionException invalidActionException){
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(new GenericErrorResponseDto(invalidActionException.getMessage()));
     }
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
