@@ -43,6 +43,10 @@ dependencies {
 	implementation 'com.google.cloud:google-cloud-storage'
 	//MAIL SENDER
 	implementation group: 'org.springframework.boot', name: 'spring-boot-starter-mail', version: '2.5.4'
+	//RABBIT MQ
+	implementation group: 'org.springframework.boot', name: 'spring-boot-starter-amqp', version: '2.4.4'
+	//JSON
+	implementation group: 'org.json', name: 'json', version: '20210307'
 }
 
 test {

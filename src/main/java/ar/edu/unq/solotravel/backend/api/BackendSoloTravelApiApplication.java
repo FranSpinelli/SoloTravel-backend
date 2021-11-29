@@ -4,6 +4,7 @@ import ar.edu.unq.solotravel.backend.api.dtos.CreateTripDto;
 import ar.edu.unq.solotravel.backend.api.dtos.TripDto;
 import ar.edu.unq.solotravel.backend.api.models.Trip;
 import org.modelmapper.ModelMapper;
+import org.springframework.amqp.core.Queue;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration;
@@ -32,4 +33,9 @@ public class BackendSoloTravelApiApplication {
 
 		return modelMapper;
 	}
+	@Bean
+	public Queue createQueue() {
+		return new Queue("mailQueue", false);
+	}
+
 }

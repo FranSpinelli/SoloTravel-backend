@@ -1,5 +1,6 @@
 package ar.edu.unq.solotravel.backend.api.services;
 
+import ar.edu.unq.solotravel.backend.api.dtos.MailDto;
 import ar.edu.unq.solotravel.backend.api.dtos.TripDto;
 import ar.edu.unq.solotravel.backend.api.dtos.TripListResponseDto;
 import ar.edu.unq.solotravel.backend.api.exceptions.InvalidActionException;
@@ -11,7 +12,10 @@ import ar.edu.unq.solotravel.backend.api.models.Trip;
 import ar.edu.unq.solotravel.backend.api.repositories.TravelerRepository;
 import ar.edu.unq.solotravel.backend.api.repositories.TravelAgencyRepository;
 import ar.edu.unq.solotravel.backend.api.repositories.TripRepository;
+import org.json.JSONObject;
 import org.modelmapper.ModelMapper;
+import org.springframework.amqp.core.Queue;
+import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -32,6 +36,11 @@ public class TravelerService {
     private ModelMapper modelMapper;
     @Autowired
     private EmailSenderHelper emailSenderHelper;
+    @Autowired
+    private RabbitTemplate rabbitTemplate;
+    @Autowired
+    private Queue mailQueue;
+
 
     public TripListResponseDto getUserFavorites(Integer userId) {
 
@@ -83,8 +92,11 @@ public class TravelerService {
             userWithId.addBookedTrip(tripWithId);
             tripWithId.bookSlot();
 
-            emailSenderHelper.sendEmail(userWithId.getEmail(), travelerEmailSubject, travelerEmailBody);
-            emailSenderHelper.sendEmail(travelAgencyWithTrip.getEmail(), travelAgencyEmailSubject, travelAgencyEmailBOdy);
+            String travelerMailDto = new JSONObject(new MailDto(userWithId.getEmail(), travelerEmailSubject, travelerEmailBody)).toString();
+            String travelAgencyMailDto = new JSONObject(new MailDto(travelAgencyWithTrip.getEmail(), travelAgencyEmailSubject, travelAgencyEmailBOdy)).toString();
+
+            rabbitTemplate.convertAndSend(mailQueue.getName(), travelerMailDto);
+            rabbitTemplate.convertAndSend(mailQueue.getName(), travelAgencyMailDto);
 
             travelerRepository.save(userWithId);
             tripRepository.save(tripWithId);
