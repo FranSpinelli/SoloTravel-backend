@@ -92,14 +92,14 @@ public class TravelerService {
             userWithId.addBookedTrip(tripWithId);
             tripWithId.bookSlot();
 
+            travelerRepository.save(userWithId);
+            tripRepository.save(tripWithId);
+
             String travelerMailDto = new JSONObject(new MailDto(userWithId.getEmail(), travelerEmailSubject, travelerEmailBody)).toString();
             String travelAgencyMailDto = new JSONObject(new MailDto(travelAgencyWithTrip.getEmail(), travelAgencyEmailSubject, travelAgencyEmailBOdy)).toString();
 
             rabbitTemplate.convertAndSend(mailQueue.getName(), travelerMailDto);
             rabbitTemplate.convertAndSend(mailQueue.getName(), travelAgencyMailDto);
-
-            travelerRepository.save(userWithId);
-            tripRepository.save(tripWithId);
         }
     }
 }
