@@ -1,6 +1,7 @@
 package ar.edu.unq.solotravel.backend.api.services;
 
 import ar.edu.unq.solotravel.backend.api.dtos.*;
+import ar.edu.unq.solotravel.backend.api.exceptions.InvalidActionException;
 import ar.edu.unq.solotravel.backend.api.exceptions.NoSuchElementException;
 import ar.edu.unq.solotravel.backend.api.models.TravelAgency;
 import ar.edu.unq.solotravel.backend.api.models.Traveler;
@@ -63,16 +64,20 @@ public class TripService {
         TravelAgency agencyWithId = travelAgencyRepository.findById(agencyId).orElseThrow(() -> new NoSuchElementException("No Agency with Id: " + agencyId));
         if (agencyWithId.getTrips().stream().anyMatch(trip -> trip.getId().equals(tripId)) && tripId.equals(updateTripDto.getId())){
             Trip tripWithId = tripRepository.findById(tripId).orElseThrow(() -> new NoSuchElementException("No Trip with Id: " + tripId));
-            tripWithId.setName(updateTripDto.getName());
-            tripWithId.setDestination(updateTripDto.getDestination());
-            tripWithId.setImage(updateTripDto.getImage());
-            tripWithId.setDescription(updateTripDto.getDescription());
-            tripWithId.setPrice(updateTripDto.getPrice());
-            tripWithId.setStartDate(updateTripDto.getStartDate());
-            tripWithId.setEndDate(updateTripDto.getEndDate());
-            tripWithId.setTotalSlots(updateTripDto.getTotalSlots());
-            tripWithId.setAvailableSlots(updateTripDto.getTotalSlots());
-            tripRepository.save(tripWithId);
+            if(tripWithId.getAvailableSlots() < tripWithId.getTotalSlots()){
+                throw new InvalidActionException("A Trip that has reservations can't be updated");
+            }else{
+                tripWithId.setName(updateTripDto.getName());
+                tripWithId.setDestination(updateTripDto.getDestination());
+                tripWithId.setImage(updateTripDto.getImage());
+                tripWithId.setDescription(updateTripDto.getDescription());
+                tripWithId.setPrice(updateTripDto.getPrice());
+                tripWithId.setStartDate(updateTripDto.getStartDate());
+                tripWithId.setEndDate(updateTripDto.getEndDate());
+                tripWithId.setTotalSlots(updateTripDto.getTotalSlots());
+                tripWithId.setAvailableSlots(updateTripDto.getTotalSlots());
+                tripRepository.save(tripWithId);
+            }
         }else{
             throw new NoSuchElementException("The Agency does not contain a trip with Id: " + tripId);
         }
@@ -101,8 +106,12 @@ public class TripService {
         Trip tripWithId = tripRepository.findById(tripId).orElseThrow(() -> new NoSuchElementException("No Trip with Id: " + tripId));
 
         if (agencyWithId.getTrips().stream().anyMatch(trip -> trip.getId().equals(tripId))){
-            agencyWithId.removeTrip(tripWithId);
-            tripRepository.deleteById(tripId);
+            if(tripWithId.getAvailableSlots() < tripWithId.getTotalSlots()){
+                throw new InvalidActionException("A Trip that has reservations can't be deleted");
+            }else{
+                agencyWithId.removeTrip(tripWithId);
+                tripRepository.deleteById(tripId);
+            }
         }else{
             throw new NoSuchElementException("The Agency does not contain a trip with Id: " + tripId);
         }

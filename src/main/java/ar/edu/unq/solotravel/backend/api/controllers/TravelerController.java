@@ -51,9 +51,9 @@ public class TravelerController {
         return ResponseEntity.ok().build();
     }
 
-    //@ValidateGoogleJwt
+    @ValidateGoogleJwt
     @PutMapping("/{userId}/book/{tripId}")
-    public ResponseEntity bookTrip(@RequestHeader("Authorization") String token,
+    public ResponseEntity bookTrip(@RequestHeader("Authorization") String googleToken,
                                    @PathVariable Integer userId,
                                    @PathVariable Integer tripId) {
         travelerService.bookTrip(userId, tripId);
