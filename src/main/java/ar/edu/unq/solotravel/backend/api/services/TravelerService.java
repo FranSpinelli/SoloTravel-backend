@@ -85,9 +85,9 @@ public class TravelerService {
         String travelAgencyEmailBOdy = "El pasajero ya fue notificado de la reserva y esta esperando ser contactado por usted para ultimar detalles. \n mail de contacto: " + userWithId.getEmail();
 
         if(! tripWithId.hasAvailableSlot()){
-            throw new InvalidActionException("Trip " + tripId + " hasn't got any available slot");
+            throw new InvalidActionException("El viaje " + tripId + " ya no tiene lugares disponibles");
         }else if (userWithId.hasBookedTrip(tripWithId)){
-            throw new InvalidActionException("User " + userId + " can't book more than one slot");
+            throw new InvalidActionException("El usuario" + userId + " ya tiene una reserva para dicho viaje");
         }else{
             userWithId.addBookedTrip(tripWithId);
             tripWithId.bookSlot();
