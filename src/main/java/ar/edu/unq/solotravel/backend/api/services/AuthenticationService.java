@@ -43,10 +43,10 @@ public class AuthenticationService {
 
     public TokenResponseDto authenticateTravelAgency(TravelAgencyLoginDto travelAgencyLoginDto) {
         TravelAgency travelAgencyWithEmail = travelAgencyRepository.findByEmail(travelAgencyLoginDto.getEmail())
-               .orElseThrow(() -> new LogInException("Incorrect mail or password"));
+               .orElseThrow(() -> new LogInException("Mail o contraseña incorrectos"));
 
        if(!travelAgencyWithEmail.getPassword().equals(travelAgencyLoginDto.getPassword())){
-           throw new LogInException("Incorrect mail or password");
+           throw new LogInException("Mail o contraseña incorrectos");
        }
 
        String token = internalJwtHelper.getTokenFor(travelAgencyWithEmail.getEmail());
