@@ -24,7 +24,7 @@ public class RegistrationService {
         Optional<TravelAgency> travelAgencyWithEmail = travelAgencyRepository.findByEmail(travelAgencyRegisterDto.getEmail());
 
         if (travelAgencyWithEmail.isPresent()) {
-            throw new RegisterException("There is already a Travel Agency using that email");
+            throw new RegisterException("Ya hay una agencia de viajes registrada con ese nombre");
         }
         TravelAgency newTravelAgency =  modelMapper.map(travelAgencyRegisterDto, TravelAgency.class);
         travelAgencyRepository.save(newTravelAgency);
