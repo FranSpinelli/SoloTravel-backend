@@ -73,17 +73,14 @@ INSERT INTO trips (id, name, destination, image, description, price, start_date,
 
 INSERT INTO locations (id, province, city, street, number) VALUES
     (-1, "Buenos Aires", "Berazategui", "Avenida Mitre", 1233),
-    (-2, "Buenos Aires", "Quilmes", "Avenida Mitre", 655),
     (-3, "Buenos Aires", "Quilmes", "Alsina", 182);
 
 INSERT INTO managers (id, first_Name, surname, dni, cuit) VALUES
     (-1, "Francisco", "Svrznjak", '90976546', 20909765465),
-    (-2, "Nicolas", "Ruiz", '92366777', 20923667775),
     (-3, "Carina", "Spinelli", '55385024', 20553850245);
 
 INSERT INTO users (id, email, name) VALUES
     (-1, 'franciscospinelli98@gmail.com', 'Carlos Sansot'),
-    (-2, 'nicoruiz182@gmail.com', 'Macondo Viajes'),
     (-3, 'nico-ruiz-011@hotmail.com', 'Equitur'),
     (-4, 'francisco.spinelli@mercadolibre.com', 'Francisco Spinelli');
 
@@ -92,7 +89,6 @@ INSERT INTO travelers (google_id, picture, id) VALUES
 
 INSERT INTO travel_agencies (password, id, cuit, fiscal_name, location_id, manager_id) VALUES
     ('guest', -1, 20315059745, "Carlos Sansot S.A", -1, -1),
-    ('guest', -2, 20376265625, "Macondo Viajes S.A", -2, -2),
     ('guest', -3, 20409737135, "Equitur S.R.L", -3, -3);
 
 INSERT INTO travel_agencies_trips (travel_agency_id, trips_id) VALUES
@@ -100,10 +96,10 @@ INSERT INTO travel_agencies_trips (travel_agency_id, trips_id) VALUES
     (-1, -2),
     (-1, -3),
     (-1, -4),
-    (-2, -5),
-    (-2, -6),
-    (-2, -7),
-    (-2, -8),
+    (-1, -5),
+    (-1, -6),
+    (-3, -7),
+    (-3, -8),
     (-3, -9),
     (-3, -10),
     (-3, -11);
